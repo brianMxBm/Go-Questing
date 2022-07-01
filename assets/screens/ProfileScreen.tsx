@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,10 +10,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function ProfileScreen() {
+function ProfileScreen() {
   return (
     <View style={styles.container}>
       <Text style={{ color: 'white' }}>Profile Screen</Text>
     </View>
   );
 }
+
+export default ProfileScreen;
