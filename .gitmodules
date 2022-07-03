@@ -1,0 +1,3 @@
+[submodule "Go-Questing-Backend"]
+	path = Go-Questing-Backend
+	url = https://github.com/MxBM/Go-Questing-Backend
