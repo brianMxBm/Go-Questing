@@ -14,12 +14,14 @@ const styles = StyleSheet.create({
   }
 });
 interface FormValues {
+  name: string;
   email: string;
   password: string;
   password2: string;
 }
 
 interface ErrorResponse {
+  name?: string;
   email?: string;
   password?: string;
   password2?: string;
@@ -27,7 +29,7 @@ interface ErrorResponse {
 
 const validateForm = (values: FormValues): ErrorResponse => {
   const errors: ErrorResponse = {};
-
+  if (!values.name) errors.name = 'Name is required';
   if (!values.email) errors.email = 'Email address is required';
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email))
     errors.email = 'Email address is invalid';
@@ -41,12 +43,14 @@ function RegisterScreen() {
     <View style={styles.container}>
       <Text style={{ color: 'white' }}>Login</Text>
       <Formik
-        initialValues={{ email: '', password: '', password2: '' }}
+        initialValues={{ name: '', email: '', password: '', password2: '' }}
         onSubmit={(values) => console.log(values)}
         validate={validateForm}
         validateOnChange={false}>
         {({ handleChange, handleSubmit, values, errors }) => (
           <View>
+            <TextInput placeholder="Name" onChangeText={handleChange('name')} value={values.name} />
+            <Text style={styles.textDanger}>{errors.name}</Text>
             <TextInput
               placeholder="Email"
               onChangeText={handleChange('email')}
@@ -55,12 +59,15 @@ function RegisterScreen() {
             <Text style={styles.textDanger}>{errors.email}</Text>
             <TextInput
               placeholder="Password"
+              secureTextEntry={true}
               onChangeText={handleChange('password')}
               value={values.password}
+
             />
             <Text style={styles.textDanger}>{errors.password}</Text>
             <TextInput
               placeholder="Confirm Password"
+              secureTextEntry={true}
               onChangeText={handleChange('password2')}
               value={values.password2}
             />
