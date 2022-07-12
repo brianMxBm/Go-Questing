@@ -1,6 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
-import { Formik } from 'formik';
+import { ErrorResponse, FormValues } from '../../types/index';
+import { Formik, yupToFormErrors } from 'formik';
+import FormInput from '../components/FormInput';
+import SubmitButton from '../components/SubmitButton';
+import * as yup from 'yup';
+import { useNavigation } from '@react-navigation/native';
+import CustomFormik from '../components/CustomFomik';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,68 +19,47 @@ const styles = StyleSheet.create({
     color: 'red'
   }
 });
-interface FormValues {
-  name: string;
-  email: string;
-  password: string;
-  password2: string;
-}
 
-interface ErrorResponse {
-  name?: string;
-  email?: string;
-  password?: string;
-  password2?: string;
-}
-
-const validateForm = (values: FormValues): ErrorResponse => {
-  const errors: ErrorResponse = {};
-  if (!values.name) errors.name = 'Name is required';
-  if (!values.email) errors.email = 'Email address is required';
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email))
-    errors.email = 'Email address is invalid';
-
-  if (values.password.length < 6) errors.password = 'Password must be at least 6 characters';
-  if (values.password2 !== values.password) errors.password2 = 'Passwords must match';
-  return errors;
+const initialValues = {
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
 };
+
+const validationSchema = yup.object({
+  name: yup.string().trim().required('Name Is Missing'),
+  email: yup.string().email('Invalid Email!').required('Email Is Missing'),
+  password: yup.string().trim().min(8, 'Password Is Too Short').required('Password Is Missing'),
+  passwordConfirmation: yup.string().oneOf([yup.ref('password'), null], 'Passwords Must Match')
+});
+
 function RegisterScreen() {
+  //TODO: Add Navigation Prop
+  const handleSignUp = (values: any, formikActions: any) => {
+    //Executes when form is submitting.
+    setTimeout(() => {
+      formikActions.resetForm();
+      formikActions.setSubmitting(false);
+      //navigation.navigate('Login');
+    }, 3000);
+    console.log(values, formikActions);
+  };
+
   return (
+    //Add secureTextEntry as a prop to FormInput Component.
     <View style={styles.container}>
       <Text style={{ color: 'white' }}>Login</Text>
-      <Formik
-        initialValues={{ name: '', email: '', password: '', password2: '' }}
-        onSubmit={(values) => console.log(values)}
-        validate={validateForm}
-        validateOnChange={false}>
-        {({ handleChange, handleSubmit, values, errors }) => (
-          <View>
-            <TextInput placeholder="Name" onChangeText={handleChange('name')} value={values.name} />
-            <Text style={styles.textDanger}>{errors.name}</Text>
-            <TextInput
-              placeholder="Email"
-              onChangeText={handleChange('email')}
-              value={values.email}
-            />
-            <Text style={styles.textDanger}>{errors.email}</Text>
-            <TextInput
-              placeholder="Password"
-              secureTextEntry={true}
-              onChangeText={handleChange('password')}
-              value={values.password}
-            />
-            <Text style={styles.textDanger}>{errors.password}</Text>
-            <TextInput
-              placeholder="Confirm Password"
-              secureTextEntry={true}
-              onChangeText={handleChange('password2')}
-              value={values.password2}
-            />
-            <Text style={styles.textDanger}>{errors.password2}</Text>
-            <Button onPress={handleSubmit} title="Submit" />
-          </View>
-        )}
-      </Formik>
+      <CustomFormik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSignUp}>
+        <FormInput name="name" placeholderText="What Is Thy Name (lol)" />
+        <FormInput name="email" placeholderText="What Is Thy Email" />
+        <FormInput name="password" placeholderText="What Is Thy Password" />
+        <FormInput name="confirmPassword" placeholderText="What Is Thy Password...Again.." />
+        <SubmitButton title="Sign-Up" />
+      </CustomFormik>
     </View>
   );
 }
