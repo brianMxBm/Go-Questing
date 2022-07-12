@@ -34,3 +34,45 @@ export interface tabButtonType {
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
   accessibilityState?: any; //TODO: CHANGE THIS CAN'T STAY LIKE THIS
 }
+
+export interface FormValues {
+  name: string;
+  email: string;
+  password: string;
+  password2: string;
+}
+
+export interface ErrorResponse {
+  name?: string;
+  email?: string;
+  password?: string;
+  password2?: string;
+}
+
+export interface inputType {
+  labelValue: string;
+  placeHolderText: string;
+  iconType: React.ElementType;
+}
+
+export interface initialType {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface submitType {
+  title: string;
+}
+export interface formType {
+  placeholderText: string;
+  name: string;
+}
+
+export interface customFormType {
+  children: any;
+  initialValues: any;
+  validationSchema: any;
+  onSubmit: any;
+}
