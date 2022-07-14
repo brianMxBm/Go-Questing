@@ -1,3 +1,4 @@
+import { FormikErrors } from 'formik';
 import React from 'react';
 import { GestureResponderEvent, Animated } from 'react-native';
 import Icon from '../theme/icons';
