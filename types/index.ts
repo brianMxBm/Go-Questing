@@ -65,6 +65,7 @@ export interface initialType {
 
 export interface submitType {
   title: string;
+  color: string;
 }
 export interface formType {
   placeholderText: string;

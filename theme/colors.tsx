@@ -5,5 +5,5 @@ export default {
   black: '#000000',
   gray: '#808080',
   lightBlue: '#d4eefa',
-  confirm: '#6eb2ff'
+  buttons: '#a5fa90'
 };

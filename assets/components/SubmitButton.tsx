@@ -1,18 +1,23 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useFormikContext } from 'formik';
-import React from 'react';
+import React, { useEffect } from 'react';
 import colors from '../../theme/colors';
 import { WIDTH } from '../../constants/dimensions';
-import { submitType } from '../../types';
+import { initialType, submitType } from '../../types';
 
-const SubmitButton = ({ title }: submitType) => {
-  const { handleSubmit, isSubmitting } = useFormikContext();
+const SubmitButton = ({ title, color }: submitType) => {
+  const { handleSubmit, isSubmitting } = useFormikContext<initialType>();
+
+  useEffect(() => {
+    console.log(handleSubmit);
+  }, [isSubmitting, handleSubmit]);
+
   return (
-    <Pressable
-      onPress={() => (isSubmitting ? null : handleSubmit)}
-      style={[styles.submit, { backgroundColor: isSubmitting ? 'gray' : colors.confirm }]}>
+    <TouchableOpacity
+      onPress={() => handleSubmit()}
+      style={[styles.submit, { backgroundColor: isSubmitting ? 'gray' : color }]}>
       <Text style={styles.btnText}>{title}</Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

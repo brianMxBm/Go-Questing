@@ -47,20 +47,21 @@ const styles = StyleSheet.create({
   }
 });
 function FormInput({ placeholderText, name }: formType) {
-  //...rest: any as prop.
   //TODO: Remove Rest Props.
   const { values, errors, touched, handleChange, handleBlur } = useFormikContext<initialType>();
 
-  const value = values[name];
-  const error = errors[name];
-  const isInputTouched = touched[name];
+  const value = values[name as keyof initialType];
+  const error = errors[name as keyof initialType];
+  const isInputTouched = touched[name as keyof initialType];
 
   return (
-    <View style={styles.inputContainer}>
+    <View>
       <>
         {error && isInputTouched ? (
-          <Text style={{ color: 'red', paddingVertical: 3 }}>{error}</Text>
+          <Text style={{ color: 'red', paddingHorizontal: 5 }}>{error}</Text>
         ) : null}
+      </>
+      <View style={styles.inputContainer}>
         <TextInput
           value={value}
           style={styles.input}
@@ -69,9 +70,8 @@ function FormInput({ placeholderText, name }: formType) {
           onBlur={handleBlur(name)}
           placeholder={placeholderText}
           placeholderTextColor="#666"
-          //{...rest}
         />
-      </>
+      </View>
     </View>
   );
 }
