@@ -8,10 +8,6 @@ import { initialType, submitType } from '../../types';
 const SubmitButton = ({ title, color }: submitType) => {
   const { handleSubmit, isSubmitting } = useFormikContext<initialType>();
 
-  useEffect(() => {
-    console.log(handleSubmit);
-  }, [isSubmitting, handleSubmit]);
-
   return (
     <TouchableOpacity
       onPress={() => handleSubmit()}
