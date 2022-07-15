@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { signUp } from '../../utils/auth';
+import * as yup from 'yup';
 import FormInput from '../components/FormInput';
 import SubmitButton from '../components/SubmitButton';
-import * as yup from 'yup';
 import CustomFormik from '../components/CustomFomik';
-import axios from 'axios';
-import { IP } from '@env';
 import colors from '../../theme/colors';
+import AppLink from '../components/AppLink';
+import LinkNavigator from '../components/LinkNavigator';
+import { navigationType } from '../../types';
 
 const styles = StyleSheet.create({
   container: {
@@ -46,18 +48,13 @@ const validationSchema = yup.object().shape({
     .required('Please Confirm Password')
 });
 
-function RegisterScreen() {
+function RegisterScreen({ navigation }: navigationType) {
   //TODO: Add Navigation Prop
-  const signUp = async (values: any, formikActions: any) => {
-    try {
-      const { data } = await axios.post(`http://${IP}:8000/api/user/create`, {
-        ...values
-      }); //Register user endppoint
-      formikActions.resetForm();
-      formikActions.setSubmitting(false);
-    } catch (error) {
-      console.log(error); //TODO: Implement actual error handling.
-    }
+  const handleSignUp = async (values: any, formikActions: any) => {
+    const res = await signUp(values);
+    formikActions.setSubmitting(false);
+    if (!res.sucesss) return console.log(res.error);
+    formikActions.resetForm();
   };
 
   return (
@@ -68,13 +65,19 @@ function RegisterScreen() {
         <CustomFormik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={signUp}>
+          onSubmit={handleSignUp}>
           <FormInput name="name" placeholderText="Name" />
           <FormInput name="email" placeholderText="Email" />
           <FormInput name="password" placeholderText="Password" />
           <FormInput name="confirmPassword" placeholderText="Password Confirmation" />
           <SubmitButton color={colors.buttons} title="Sign-Up" />
         </CustomFormik>
+        <LinkNavigator
+          leftLinkText="Sign Up"
+          rightLinkText="Forgot Password"
+          onLeftLinkPress={() => navigation.navigate('Login')}
+          onRightLinkPress={() => console.log('hey')}
+        />
       </View>
     </ScrollView>
   );
