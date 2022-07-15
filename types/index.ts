@@ -1,3 +1,4 @@
+import { NavigationProp } from '@react-navigation/native';
 import { FormikErrors } from 'formik';
 import React from 'react';
 import { GestureResponderEvent, Animated } from 'react-native';
@@ -77,4 +78,20 @@ export interface customFormType {
   initialValues: any;
   validationSchema: any;
   onSubmit: any;
+}
+
+export interface appLinkType {
+  title: string;
+  onPress?: ((event: GestureResponderEvent) => void) | undefined;
+}
+
+export interface appLinkNavigator {
+  leftLinkText: string;
+  rightLinkText: string;
+  onLeftLinkPress: ((event: GestureResponderEvent) => void) | undefined;
+  onRightLinkPress: ((event: GestureResponderEvent) => void) | undefined;
+}
+
+export interface navigationType {
+  navigation: NavigationProp<any, any>;
 }
