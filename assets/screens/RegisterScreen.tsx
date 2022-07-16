@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { signUp } from '../../utils/auth';
 import * as yup from 'yup';
@@ -6,9 +6,10 @@ import FormInput from '../components/FormInput';
 import SubmitButton from '../components/SubmitButton';
 import CustomFormik from '../components/CustomFomik';
 import colors from '../../theme/colors';
-import AppLink from '../components/AppLink';
+import AnimatedAlert from '../components/AnimatedAlert';
 import LinkNavigator from '../components/LinkNavigator';
 import { navigationType } from '../../types';
+import { updateNotification } from '../../utils/helper';
 
 const styles = StyleSheet.create({
   container: {
@@ -49,37 +50,46 @@ const validationSchema = yup.object().shape({
 });
 
 function RegisterScreen({ navigation }: navigationType) {
-  //TODO: Add Navigation Prop
   const handleSignUp = async (values: any, formikActions: any) => {
     const res = await signUp(values);
     formikActions.setSubmitting(false);
-    if (!res.sucesss) return console.log(res.error);
+    if (!res.sucesss) return updateNotification(setMessage, res.error);
     formikActions.resetForm();
+    navigation.navigate('Tabs');
   };
+
+  const [message, setMessage] = useState({
+    //Implement utilzing Redux.
+    text: '',
+    type: ''
+  });
 
   return (
     //Add secureTextEntry as a prop to FormInput Component in production.
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={{ bottom: 50 }}>
-        <Text style={{ color: 'white' }}>Login</Text>
-        <CustomFormik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSignUp}>
-          <FormInput name="name" placeholderText="Name" />
-          <FormInput name="email" placeholderText="Email" />
-          <FormInput name="password" placeholderText="Password" />
-          <FormInput name="confirmPassword" placeholderText="Password Confirmation" />
-          <SubmitButton color={colors.buttons} title="Sign-Up" />
-        </CustomFormik>
-        <LinkNavigator
-          leftLinkText="Sign Up"
-          rightLinkText="Forgot Password"
-          onLeftLinkPress={() => navigation.navigate('Login')}
-          onRightLinkPress={() => console.log('hey')}
-        />
-      </View>
-    </ScrollView>
+    <>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={{ bottom: 50 }}>
+          {message.text ? <AnimatedAlert type={message.type} text={message.text} /> : null}
+          <Text style={{ color: 'white' }}>Login</Text>
+          <CustomFormik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSignUp}>
+            <FormInput name="name" placeholderText="Name" />
+            <FormInput name="email" placeholderText="Email" />
+            <FormInput name="password" placeholderText="Password" />
+            <FormInput name="confirmPassword" placeholderText="Password Confirmation" />
+            <SubmitButton color={colors.buttons} title="Sign-Up" />
+          </CustomFormik>
+          <LinkNavigator
+            leftLinkText="Sign Up"
+            rightLinkText="Forgot Password"
+            onLeftLinkPress={() => navigation.navigate('Login')}
+            onRightLinkPress={() => console.log('hey')}
+          />
+        </View>
+      </ScrollView>
+    </>
   );
 }
 

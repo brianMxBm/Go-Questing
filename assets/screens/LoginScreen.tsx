@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import FormInput from '../components/FormInput';
 import SubmitButton from '../components/SubmitButton';
@@ -6,6 +6,9 @@ import * as yup from 'yup';
 import CustomFormik from '../components/CustomFomik';
 import colors from '../../theme/colors';
 import { signIn } from '../../utils/auth';
+import { navigationType } from '../../types';
+import AnimatedAlert from '../components/AnimatedAlert';
+import { updateNotification } from '../../utils/helper';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,20 +32,28 @@ const validationSchema = yup.object().shape({
   password: yup.string().trim().required('Password Is Required')
 });
 
-function LoginScreen() {
+function LoginScreen({ navigation }: navigationType) {
   //TODO: Add Navigation Prop
   const handleSignIn = async (values: any, formikActions: any) => {
     const res = await signIn(values);
     formikActions.setSubmitting(false);
-
-    if (!res.success) return console.log(res.error);
+    if (!res.success) return updateNotification(setMessage, res.error);
     formikActions.resetForm();
+    navigation.navigate('Tabs');
   };
+
+  const [message, setMessage] = useState({
+    //Implement utilzing Redux.
+    text: '',
+    type: ''
+  });
 
   return (
     //Add secureTextEntry as a prop to FormInput Component in production.
     <ScrollView contentContainerStyle={styles.container}>
       <View style={{ bottom: 50 }}>
+        {message.text ? <AnimatedAlert type={message.type} text={message.text} /> : null}
+
         <Text style={{ color: 'white' }}>Login</Text>
         <CustomFormik
           initialValues={initialValues}
@@ -50,7 +61,7 @@ function LoginScreen() {
           onSubmit={handleSignIn}>
           <FormInput name="email" placeholderText="Email" />
           <FormInput name="password" placeholderText="Password" />
-          <SubmitButton color={colors.buttons} title="Sign-Up" />
+          <SubmitButton color={colors.buttons} title="Login" />
         </CustomFormik>
       </View>
     </ScrollView>

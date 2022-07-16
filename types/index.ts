@@ -2,6 +2,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { FormikErrors } from 'formik';
 import React from 'react';
 import { GestureResponderEvent, Animated } from 'react-native';
+import { string } from 'yup';
 import Icon from '../theme/icons';
 
 export interface iconType {
@@ -94,4 +95,9 @@ export interface appLinkNavigator {
 
 export interface navigationType {
   navigation: NavigationProp<any, any>;
+}
+
+export interface notificatioNType {
+  type: string;
+  text: string;
 }
