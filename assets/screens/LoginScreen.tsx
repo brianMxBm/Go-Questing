@@ -33,17 +33,19 @@ const validationSchema = yup.object().shape({
 });
 
 function LoginScreen({ navigation }: navigationType) {
-  //TODO: Add Navigation Prop
   const handleSignIn = async (values: any, formikActions: any) => {
     const res = await signIn(values);
     formikActions.setSubmitting(false);
     if (!res.success) return updateNotification(setMessage, res.error);
     formikActions.resetForm();
-    navigation.navigate('Tabs');
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Tabs' }]
+    });
   };
 
   const [message, setMessage] = useState({
-    //Implement utilzing Redux.
+    //TODO:Implement utilzing Redux.
     text: '',
     type: ''
   });

@@ -55,7 +55,10 @@ function RegisterScreen({ navigation }: navigationType) {
     formikActions.setSubmitting(false);
     if (!res.sucesss) return updateNotification(setMessage, res.error);
     formikActions.resetForm();
-    navigation.navigate('Tabs');
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Tabs' }]
+    });
   };
 
   const [message, setMessage] = useState({
