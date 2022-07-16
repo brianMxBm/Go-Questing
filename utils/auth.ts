@@ -24,3 +24,12 @@ export const signIn = async (values: any) => {
     return catchError(error);
   }
 };
+
+export const forgotPassword = async (values: any) => {
+  try {
+    const { data } = await client.post('/user/forgot-password', { ...values });
+    return data;
+  } catch (error: any) {
+    return catchError(error);
+  }
+};
