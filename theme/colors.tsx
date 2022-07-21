@@ -4,5 +4,7 @@ export default {
   white: '#FFFFFF',
   black: '#000000',
   gray: '#808080',
-  lightBlue: '#d4eefa'
+  lightBlue: '#d4eefa',
+  buttons: '#a5fa90',
+  links: '#6ba7f5'
 };

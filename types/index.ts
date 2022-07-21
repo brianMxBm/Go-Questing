@@ -1,5 +1,8 @@
+import { NavigationProp } from '@react-navigation/native';
+import { FormikErrors } from 'formik';
 import React from 'react';
 import { GestureResponderEvent, Animated } from 'react-native';
+import { string } from 'yup';
 import Icon from '../theme/icons';
 
 export interface iconType {
@@ -33,4 +36,68 @@ export interface tabButtonType {
   item: itemType;
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
   accessibilityState?: any; //TODO: CHANGE THIS CAN'T STAY LIKE THIS
+}
+
+export interface FormValues {
+  name: string;
+  email: string;
+  password: string;
+  password2: string;
+}
+
+export interface ErrorResponse {
+  name?: string;
+  email?: string;
+  password?: string;
+  password2?: string;
+}
+
+export interface inputType {
+  labelValue: string;
+  placeHolderText: string;
+  iconType: React.ElementType;
+}
+
+export interface initialType {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface submitType {
+  title: string;
+  color: string;
+}
+export interface formType {
+  placeholderText: string;
+  name: string;
+}
+
+export interface customFormType {
+  children: any;
+  initialValues: any;
+  validationSchema: any;
+  onSubmit: any;
+}
+
+export interface appLinkType {
+  title: string;
+  onPress?: ((event: GestureResponderEvent) => void) | undefined;
+}
+
+export interface appLinkNavigator {
+  leftLinkText: string;
+  rightLinkText: string;
+  onLeftLinkPress: ((event: GestureResponderEvent) => void) | undefined;
+  onRightLinkPress: ((event: GestureResponderEvent) => void) | undefined;
+}
+
+export interface navigationType {
+  navigation: NavigationProp<any, any>;
+}
+
+export interface notificatioNType {
+  type: string;
+  text: string;
 }

@@ -1,6 +1,15 @@
-import React from 'react';
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
-import { Formik } from 'formik';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { signUp } from '../../utils/auth';
+import * as yup from 'yup';
+import FormInput from '../components/FormInput';
+import SubmitButton from '../components/SubmitButton';
+import CustomFormik from '../components/CustomFomik';
+import colors from '../../theme/colors';
+import AnimatedAlert from '../components/AnimatedAlert';
+import LinkNavigator from '../components/LinkNavigator';
+import { navigationType } from '../../types';
+import { updateNotification } from '../../utils/helper';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,69 +22,77 @@ const styles = StyleSheet.create({
     color: 'red'
   }
 });
-interface FormValues {
-  name: string;
-  email: string;
-  password: string;
-  password2: string;
-}
 
-interface ErrorResponse {
-  name?: string;
-  email?: string;
-  password?: string;
-  password2?: string;
-}
-
-const validateForm = (values: FormValues): ErrorResponse => {
-  const errors: ErrorResponse = {};
-  if (!values.name) errors.name = 'Name is required';
-  if (!values.email) errors.email = 'Email address is required';
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email))
-    errors.email = 'Email address is invalid';
-
-  if (values.password.length < 6) errors.password = 'Password must be at least 6 characters';
-  if (values.password2 !== values.password) errors.password2 = 'Passwords must match';
-  return errors;
+const initialValues = {
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
 };
-function RegisterScreen() {
+
+const validationSchema = yup.object().shape({
+  name: yup.string().trim().required('Name Is Missing'),
+  email: yup.string().email('Invalid Email!').required('Email Is Missing'),
+  password: yup
+    .string()
+    .trim()
+    .min(8, 'Password Is Too Short')
+    .required('Password Is Required')
+    .matches(
+      /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
+      'Password requires an uppercase letter, number and special character ¯_(ツ)_/¯ '
+    ),
+  confirmPassword: yup
+    .string()
+    .trim()
+    .oneOf([yup.ref('password')], 'Passwords Must Match')
+    .required('Please Confirm Password')
+});
+
+function RegisterScreen({ navigation }: navigationType) {
+  const handleSignUp = async (values: any, formikActions: any) => {
+    const res = await signUp(values);
+    formikActions.setSubmitting(false);
+    if (!res.sucesss) return updateNotification(setMessage, res.error);
+    formikActions.resetForm();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Tabs' }]
+    });
+  };
+
+  const [message, setMessage] = useState({
+    //Implement utilzing Redux.
+    text: '',
+    type: ''
+  });
+
   return (
-    <View style={styles.container}>
-      <Text style={{ color: 'white' }}>Login</Text>
-      <Formik
-        initialValues={{ name: '', email: '', password: '', password2: '' }}
-        onSubmit={(values) => console.log(values)}
-        validate={validateForm}
-        validateOnChange={false}>
-        {({ handleChange, handleSubmit, values, errors }) => (
-          <View>
-            <TextInput placeholder="Name" onChangeText={handleChange('name')} value={values.name} />
-            <Text style={styles.textDanger}>{errors.name}</Text>
-            <TextInput
-              placeholder="Email"
-              onChangeText={handleChange('email')}
-              value={values.email}
-            />
-            <Text style={styles.textDanger}>{errors.email}</Text>
-            <TextInput
-              placeholder="Password"
-              secureTextEntry={true}
-              onChangeText={handleChange('password')}
-              value={values.password}
-            />
-            <Text style={styles.textDanger}>{errors.password}</Text>
-            <TextInput
-              placeholder="Confirm Password"
-              secureTextEntry={true}
-              onChangeText={handleChange('password2')}
-              value={values.password2}
-            />
-            <Text style={styles.textDanger}>{errors.password2}</Text>
-            <Button onPress={handleSubmit} title="Submit" />
-          </View>
-        )}
-      </Formik>
-    </View>
+    //Add secureTextEntry as a prop to FormInput Component in production.
+    <>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={{ bottom: 50 }}>
+          {message.text ? <AnimatedAlert type={message.type} text={message.text} /> : null}
+          <Text style={{ color: 'white' }}>Login</Text>
+          <CustomFormik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSignUp}>
+            <FormInput name="name" placeholderText="Name" />
+            <FormInput name="email" placeholderText="Email" />
+            <FormInput name="password" placeholderText="Password" />
+            <FormInput name="confirmPassword" placeholderText="Password Confirmation" />
+            <SubmitButton color={colors.buttons} title="Sign-Up" />
+          </CustomFormik>
+          <LinkNavigator
+            leftLinkText="Sign Up"
+            rightLinkText="Forgot Password"
+            onLeftLinkPress={() => navigation.navigate('Login')}
+            onRightLinkPress={() => console.log('hey')}
+          />
+        </View>
+      </ScrollView>
+    </>
   );
 }
 

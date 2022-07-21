@@ -1,6 +1,14 @@
-import React from 'react';
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
-import { Formik } from 'formik';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import FormInput from '../components/FormInput';
+import SubmitButton from '../components/SubmitButton';
+import * as yup from 'yup';
+import CustomFormik from '../components/CustomFomik';
+import colors from '../../theme/colors';
+import { signIn } from '../../utils/auth';
+import { navigationType } from '../../types';
+import AnimatedAlert from '../components/AnimatedAlert';
+import { updateNotification } from '../../utils/helper';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,56 +22,51 @@ const styles = StyleSheet.create({
   }
 });
 
-interface FormValues {
-  email: string;
-  password: string;
-}
-
-interface ErrorResponse {
-  email?: string;
-  password?: string;
-}
-
-// Validate form fields on submission
-const validateForm = (values: FormValues): ErrorResponse => {
-  const errors: ErrorResponse = {};
-
-  if (!values.email) errors.email = 'Email address is required';
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email))
-    errors.email = 'Email address is invalid';
-
-  if (values.password.length < 6) errors.password = 'Password must be at least 6 characters';
-  return errors;
+const initialValues = {
+  email: '',
+  password: ''
 };
 
-function LoginScreen() {
+const validationSchema = yup.object().shape({
+  email: yup.string().email('Invalid Email!').required('Email Is Missing'),
+  password: yup.string().trim().required('Password Is Required')
+});
+
+function LoginScreen({ navigation }: navigationType) {
+  const handleSignIn = async (values: any, formikActions: any) => {
+    const res = await signIn(values);
+    formikActions.setSubmitting(false);
+    if (!res.success) return updateNotification(setMessage, res.error);
+    formikActions.resetForm();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Tabs' }]
+    });
+  };
+
+  const [message, setMessage] = useState({
+    //TODO:Implement utilzing Redux.
+    text: '',
+    type: ''
+  });
+
   return (
-    <View style={styles.container}>
-      <Text style={{ color: 'white' }}>Login</Text>
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        onSubmit={(values) => console.log(values)}
-        validate={validateForm}
-        validateOnChange={false}>
-        {({ handleChange, handleSubmit, values, errors }) => (
-          <View>
-            <TextInput
-              placeholder="Email"
-              onChangeText={handleChange('email')}
-              value={values.email}
-            />
-            <Text style={styles.textDanger}>{errors.email}</Text>
-            <TextInput
-              placeholder="Password"
-              onChangeText={handleChange('password')}
-              value={values.password}
-            />
-            <Text style={styles.textDanger}>{errors.password}</Text>
-            <Button onPress={handleSubmit} title="Login" />
-          </View>
-        )}
-      </Formik>
-    </View>
+    //Add secureTextEntry as a prop to FormInput Component in production.
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={{ bottom: 50 }}>
+        {message.text ? <AnimatedAlert type={message.type} text={message.text} /> : null}
+
+        <Text style={{ color: 'white' }}>Login</Text>
+        <CustomFormik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSignIn}>
+          <FormInput name="email" placeholderText="Email" />
+          <FormInput name="password" placeholderText="Password" />
+          <SubmitButton color={colors.buttons} title="Login" />
+        </CustomFormik>
+      </View>
+    </ScrollView>
   );
 }
 
