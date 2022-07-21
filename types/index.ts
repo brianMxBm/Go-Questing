@@ -97,7 +97,7 @@ export interface navigationType {
   navigation: NavigationProp<any, any>;
 }
 
-export interface notificatioNType {
+export interface notificationType {
   type: string;
   text: string;
 }
