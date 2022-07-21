@@ -1,6 +1,14 @@
-import React from 'react';
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
-import { Formik } from 'formik';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { updateNotification } from '../../utils/helper';
+import { navigationType } from '../../types';
+import { forgotPassword } from '../../utils/auth';
+import * as yup from 'yup';
+import AnimatedAlert from '../components/AnimatedAlert';
+import CustomFormik from '../components/CustomFomik';
+import SubmitButton from '../components/SubmitButton';
+import FormInput from '../components/FormInput';
+import colors from '../../theme/colors';
 import axios from 'axios';
 
 const styles = StyleSheet.create({
@@ -14,48 +22,48 @@ const styles = StyleSheet.create({
     color: 'red'
   }
 });
-interface FormValues {
-  email: string;
-}
-interface ErrorResponse {
-  email?: string;
-}
-const validateForm = (values: FormValues): ErrorResponse => {
-  const errors: ErrorResponse = {};
 
-  if (!values.email) errors.email = 'Email address is required';
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email))
-    errors.email = 'Email address is invalid';
-  return errors;
+const initialValues = {
+  email: ''
 };
-function ForgotPasswordScreen() {
+
+const validationSchema = yup.object().shape({
+  email: yup.string().email('Invalid Email!').required('Email Is Missing')
+});
+
+function ForgotPasswordScreen({ navigation }: navigationType) {
+  const handleForgot = async (values: any, formikActions: any) => {
+    const res = await forgotPassword(values);
+    formikActions.setSubmitting(false);
+    if (!res.sucesss) return updateNotification(setMessage, res.error);
+    formikActions.resetForm();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Tabs' }]
+    });
+  };
+  const [message, setMessage] = useState({
+    //Implement utilzing Redux.
+    text: '',
+    type: ''
+  });
+
   return (
-    <View style={styles.container}>
-      <Text style={{ color: 'white' }}>Forgot Screen</Text>
-      <Formik
-        initialValues={{ email: '' }}
-        onSubmit={(values) =>
-          axios
-            .post('/forgot-password', {
-              email: values.email
-            })
-            .then((response) => console.log(response))
-        }
-        validate={validateForm}
-        validateOnChange={false}>
-        {({ handleChange, handleSubmit, values, errors }) => (
-          <View>
-            <TextInput
-              placeholder="Email"
-              onChangeText={handleChange('email')}
-              value={values.email}
-            />
-            <Text style={styles.textDanger}>{errors.email}</Text>
-            <Button onPress={handleSubmit} title="Reset Password" />
-          </View>
-        )}
-      </Formik>
-    </View>
+    <>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={{ bottom: 50 }}>
+          {message.text ? <AnimatedAlert type={message.type} text={message.text} /> : null}
+          <Text style={{ color: 'white' }}>Login</Text>
+          <CustomFormik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleForgot}>
+            <FormInput name="email" placeholderText="Email" />
+            <SubmitButton color={colors.buttons} title="Sign-Up" />
+          </CustomFormik>
+        </View>
+      </ScrollView>
+    </>
   );
 }
 

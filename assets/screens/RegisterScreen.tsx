@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { signUp } from '../../utils/auth';
+import { navigationType } from '../../types';
+import { updateNotification } from '../../utils/helper';
 import * as yup from 'yup';
 import FormInput from '../components/FormInput';
 import SubmitButton from '../components/SubmitButton';
@@ -8,8 +10,6 @@ import CustomFormik from '../components/CustomFomik';
 import colors from '../../theme/colors';
 import AnimatedAlert from '../components/AnimatedAlert';
 import LinkNavigator from '../components/LinkNavigator';
-import { navigationType } from '../../types';
-import { updateNotification } from '../../utils/helper';
 
 const styles = StyleSheet.create({
   container: {
@@ -85,10 +85,10 @@ function RegisterScreen({ navigation }: navigationType) {
             <SubmitButton color={colors.buttons} title="Sign-Up" />
           </CustomFormik>
           <LinkNavigator
-            leftLinkText="Sign Up"
+            leftLinkText="Sign In"
             rightLinkText="Forgot Password"
             onLeftLinkPress={() => navigation.navigate('Login')}
-            onRightLinkPress={() => console.log('hey')}
+            onRightLinkPress={() => navigation.navigate('Forgot')}
           />
         </View>
       </ScrollView>
