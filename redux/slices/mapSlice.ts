@@ -2,13 +2,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface mapState {
-  location: {
+  mapCenterLocation: {
     latitude: number;
     longitude: number;
   };
 }
 const initialState: mapState = {
-  location: {
+  mapCenterLocation: {
     longitude: 0,
     latitude: 0
   }
@@ -18,7 +18,9 @@ const mapSlice = createSlice({
   name: 'map',
   initialState: initialState,
   reducers: {
-    map_center_change: (state, action: PayloadAction<mapState['location']>) => {
+    //Change the Region of the map.
+    map_center_change: (state, action: PayloadAction<mapState['mapCenterLocation']>) => {
+      console.log(action.payload);
       return {
         ...state,
         mapCenterLocation: action.payload
