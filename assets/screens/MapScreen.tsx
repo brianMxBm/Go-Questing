@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
   centerContainer: {
     position: 'absolute',
-    paddingVertical: HEIGHT * 0.1,
+    paddingVertical: HEIGHT * 0.2,
     paddingHorizontal: 15,
     right: 0
   }
