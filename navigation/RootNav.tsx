@@ -19,7 +19,6 @@ export default function RootStackNavigator() {
         }}>
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
-
         <Stack.Screen name="Tabs" component={TabNavigation} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />

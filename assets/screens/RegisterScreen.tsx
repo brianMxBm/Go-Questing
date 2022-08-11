@@ -85,7 +85,7 @@ function RegisterScreen({ navigation }: navigationType) {
             <SubmitButton color={colors.buttons} title="Sign-Up" />
           </CustomFormik>
           <LinkNavigator
-            leftLinkText="Sign Up"
+            leftLinkText="Sign In"
             rightLinkText="Forgot Password"
             onLeftLinkPress={() => navigation.navigate('Login')}
             onRightLinkPress={() => console.log('hey')}

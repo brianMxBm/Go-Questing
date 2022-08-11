@@ -9,6 +9,7 @@ import { signIn } from '../../utils/auth';
 import { navigationType } from '../../types';
 import AnimatedAlert from '../components/AnimatedAlert';
 import { updateNotification } from '../../utils/helper';
+import LinkNavigator from '../components/LinkNavigator';
 
 const styles = StyleSheet.create({
   container: {
@@ -65,6 +66,12 @@ function LoginScreen({ navigation }: navigationType) {
           <FormInput name="password" placeholderText="Password" />
           <SubmitButton color={colors.buttons} title="Login" />
         </CustomFormik>
+        <LinkNavigator
+          leftLinkText="Sign Up "
+          rightLinkText="Forgot Password"
+          onLeftLinkPress={() => navigation.navigate('Register')}
+          onRightLinkPress={() => console.log('hey')}
+        />
       </View>
     </ScrollView>
   );
