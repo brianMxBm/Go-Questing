@@ -7,6 +7,7 @@ import {
 } from '../slices/locationSlice';
 
 export const getUserLocation = () => async (dispatch: ThunkDispatch<void, unknown, AnyAction>) => {
+  //TODO: State Should Not Be Void
   try {
     const { granted } = await Location.requestForegroundPermissionsAsync();
     if (granted) {

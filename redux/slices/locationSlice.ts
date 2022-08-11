@@ -42,12 +42,13 @@ const locationSlice = createSlice({
       return {
         ...state,
         location: {
-          latitude: 0.0,
-          longitude: 0.0
+          latitude: 0,
+          longitude: 0
         }
       };
     },
     default(state) {
+      //TODO: Correct?
       return state;
     }
   }

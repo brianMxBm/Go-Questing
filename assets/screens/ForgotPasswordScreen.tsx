@@ -9,7 +9,6 @@ import CustomFormik from '../components/CustomFomik';
 import SubmitButton from '../components/SubmitButton';
 import FormInput from '../components/FormInput';
 import colors from '../../theme/colors';
-import axios from 'axios';
 
 const styles = StyleSheet.create({
   container: {
@@ -59,7 +58,7 @@ function ForgotPasswordScreen({ navigation }: navigationType) {
             validationSchema={validationSchema}
             onSubmit={handleForgot}>
             <FormInput name="email" placeholderText="Email" />
-            <SubmitButton color={colors.buttons} title="Sign-Up" />
+            <SubmitButton color={colors.buttons} title="Send Link" />
           </CustomFormik>
         </View>
       </ScrollView>
