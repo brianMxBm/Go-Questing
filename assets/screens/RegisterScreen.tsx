@@ -53,8 +53,9 @@ function RegisterScreen({ navigation }: navigationType) {
   const handleSignUp = async (values: any, formikActions: any) => {
     const res = await signUp(values);
     formikActions.setSubmitting(false);
-    if (!res.sucesss) return updateNotification(setMessage, res.error);
+    if (!res.success) return updateNotification(setMessage, res.error);
     formikActions.resetForm();
+    updateNotification(setMessage, res.message, 'success');
     navigation.reset({
       index: 0,
       routes: [{ name: 'Tabs' }]
