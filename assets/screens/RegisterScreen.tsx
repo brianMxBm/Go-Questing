@@ -40,7 +40,7 @@ const validationSchema = yup.object().shape({
     .required('Password Is Required')
     .matches(
       /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
-      'Password requires an uppercase letter, number and special character ¯_(ツ)_/¯ '
+      'Password requires an uppercase letter, number and special character ¯\\_(ツ)_/¯ '
     ),
   confirmPassword: yup
     .string()
