@@ -40,7 +40,7 @@ const validationSchema = yup.object().shape({
     .required('Password Is Required')
     .matches(
       /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
-      'Password requires an uppercase letter, number and special character ¯_(ツ)_/¯ '
+      'Password requires an uppercase letter, number and special character ¯\\_(ツ)_/¯ '
     ),
   confirmPassword: yup
     .string()
@@ -53,7 +53,7 @@ function RegisterScreen({ navigation }: navigationType) {
   const handleSignUp = async (values: any, formikActions: any) => {
     const res = await signUp(values);
     formikActions.setSubmitting(false);
-    if (!res.sucesss) return updateNotification(setMessage, res.error);
+    if (!res.success) return updateNotification(setMessage, res.error);
     formikActions.resetForm();
     navigation.reset({
       index: 0,

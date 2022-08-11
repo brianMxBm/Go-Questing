@@ -73,6 +73,12 @@ export interface formType {
   placeholderText: string;
   name: string;
 }
+export interface formTypeR {
+  placeholderText: string;
+  name: string;
+  width: number;
+  height: number;
+}
 
 export interface customFormType {
   children: any;
