@@ -8,5 +8,9 @@ export default {
   buttons: '#a5fa90',
   links: '#6ba7f5',
   errors: '#ee5e65',
-  confirm: '#a5fa90'
+  confirm: '#b1d8a8',
+  tutorialBG: '#77aeff',
+  tutorialBG1: '#ae67fa',
+  tutorialBG2: '#fd315d',
+  tutorialBG3: '#90CB4A'
 };
