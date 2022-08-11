@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   label: {
-    fontSize: 12,
+    fontSize: 15,
     color: 'white'
   }
 });
@@ -53,6 +53,14 @@ export const TabArray = [
     activeIcon: 'person',
     inActiveIcon: 'person-outline',
     component: Screens.ProfileScreen
+  },
+  {
+    route: 'Chat',
+    label: 'Chats',
+    type: Icons.Ionicons,
+    activeIcon: 'chatbubble-sharp',
+    inActiveIcon: 'chatbubble-outline',
+    component: Screens.ChatScreen
   }
 ];
 
@@ -78,14 +86,15 @@ function TabButton(tab: tabButtonType) {
 
   return (
     <TouchableOpacity onPress={tab.onPress} activeOpacity={1} style={styles.container}>
-      <Animatable.View ref={viewRef} duration={500} style={styles.container}>
+      <Animatable.View ref={viewRef} duration={300} style={styles.container}>
         <Icon
           type={tab.item.type}
           name={focused ? tab.item.activeIcon : tab.item.inActiveIcon}
-          color={focused ? colors.tabs : colors.tabs}
+          color={focused ? colors.tabs : colors.white}
+          size={30}
         />
       </Animatable.View>
-      <Text style={styles.label}>{tab.item.label}</Text>
+      {/*<Text style={styles.label}>{tab.item.label}</Text>*/}
     </TouchableOpacity>
   );
 }

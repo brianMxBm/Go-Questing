@@ -3,12 +3,14 @@ import HomeScreen from '../assets/screens/HomeScreen';
 import MapScreen from '../assets/screens/MapScreen';
 import ProfileScreen from '../assets/screens/ProfileScreen';
 import FeedScreen from '../assets/screens/FeedScreen';
+import ChatScreen from '../assets/screens/ChatScreen';
 import TabNavigation from './TabNavigation';
-import RegisterScreen from '../assets/screens/RegisterScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../assets/screens/LoginScreen';
 import ForgotPasswordScreen from '../assets/screens/ForgotPasswordScreen';
+import RegisterScreen from '../assets/screens/RegisterScreen';
+import OnBoarding from '../assets/screens/OnBoarding';
 
 export default function RootStackNavigator() {
   const Stack = createNativeStackNavigator();
@@ -18,14 +20,16 @@ export default function RootStackNavigator() {
         screenOptions={{
           headerShown: false
         }}>
-        <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Forgot" component={ForgotPasswordScreen} />
+        <Stack.Screen name="Intro" component={OnBoarding} />
         <Stack.Screen name="Tabs" component={TabNavigation} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Feed" component={FeedScreen} />
         <Stack.Screen name="Map" component={MapScreen} />
+        <Stack.Screen name="Chat" component={ChatScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
