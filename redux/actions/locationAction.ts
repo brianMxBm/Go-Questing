@@ -16,7 +16,6 @@ export const getUserLocation = () => async (dispatch: ThunkDispatch<void, unknow
         dispatch(user_location_error);
         return;
       }
-      console.log('hey');
       const {
         coords: { longitude, latitude }
       } = lastKnownPosition;
