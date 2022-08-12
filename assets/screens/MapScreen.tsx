@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { useEffect } from 'react';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import mapStyle from '../../theme/mapStyle';
+// import mapStyle from '../../theme/mapStyle';
 import { WIN_WIDTH, HEIGHT } from '../../constants/dimensions';
 import { getUserLocation } from '../../redux/actions/locationAction';
 import { useAppDispatch, useAppSelector } from '../../redux/Hooks';
@@ -44,7 +44,6 @@ export default function MapScreen() {
         style={styles.mapView}
         showsMyLocationButton={false}
         showsUserLocation
-        customMapStyle={mapStyle}
         region={{
           latitude: location.latitude,
           longitude: location.longitude,
