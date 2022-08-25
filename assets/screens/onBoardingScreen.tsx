@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function OnBoarding({ navigation }: navigationType) {
+function OnBoardingScreen({ navigation }: navigationType) {
   const [currentPage, setCurrentPage] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef<any>(null); //TODO: Change Type
@@ -99,4 +99,4 @@ function OnBoarding({ navigation }: navigationType) {
   );
 }
 
-export default OnBoarding;
+export default OnBoardingScreen;
