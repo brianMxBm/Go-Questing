@@ -88,7 +88,7 @@ function RegisterScreen({ navigation }: navigationType) {
             leftLinkText="Sign In"
             rightLinkText="Forgot Password"
             onLeftLinkPress={() => navigation.navigate('Login')}
-            onRightLinkPress={() => console.log('hey')}
+            onRightLinkPress={() => navigation.navigate('Forgot')}
           />
         </View>
       </ScrollView>

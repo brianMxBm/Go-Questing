@@ -1,117 +1,81 @@
-import {
-  View,
-  KeyboardAvoidingView,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity
-} from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import * as yup from 'yup';
-import colors from '../../theme/colors';
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, Text } from 'react-native';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
+import { checkVerification } from '../../api/verify';
+import { navigationType } from '../../types';
+import AnimatedAlert from '../components/AnimatedAlert';
 import { WIDTH } from '../../constants/dimensions';
-import Icon, { Icons } from '../../theme/Icons';
+import { updateNotification } from '../../utils/helper';
 
-const inputWidth = Math.round(WIDTH / 6);
+interface OtpProps {
+  navigation: navigationType;
+  route: any;
+}
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: colors.confirm
-  },
-  heading: {
-    color: colors.black,
-    textAlign: 'center',
-    marginBottom: 15,
-    fontSize: 24
-  },
-  inputContainer: {
-    width: inputWidth,
-    height: inputWidth,
-    borderWidth: 2,
-    borderColor: colors.black,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  input: {
-    fontSize: 25,
-    color: colors.black,
-    backgroundColor: colors.white,
-    paddingHorizontal: 22,
-    paddingVertical: 20
+  prompt: {
+    fontSize: 24,
+    paddingHorizontal: 30,
+    paddingBottom: 20
   },
-  OTP: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: inputWidth / 2
+  underlineStyleBase: {
+    width: 30,
+    height: 45,
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    color: 'black',
+    fontSize: 20
   },
-  submitIcon: {
-    alignSelf: 'center',
-    padding: 20,
-    backgroundColor: colors.black,
-    borderRadius: 50,
-    marginTop: 30
+  underlineStyleHighLighted: {
+    borderColor: '#03DAC6'
+  },
+  error: {
+    alignItems: 'center',
+    bottom: 20,
+    width: WIDTH / 2
   }
 });
 
-const inputs = Array(4).fill('');
+function VerificationScreen({ navigation, route }: OtpProps) {
+  const { phoneNumber } = route?.params || {};
+  const [message, setMessage] = useState({
+    //TODO: Implement utilzing Redux.
+    text: '',
+    type: ''
+  });
 
-const submitPin = async () => {
-  console.log('test');
-};
-
-const validationSchema = yup.object().shape({
-  number: yup.number().required('Pin Required')
-});
-
-const VerificationScreen = () => {
-  const input = useRef<any>(); //TODO: CHANGE TYPE FROM ANY
-  const [OTP, setOTP] = useState<{ [key: number]: string }>({ 0: '', 1: '', 2: '', 3: '' });
-  const [nextInputIndex, setNextInputIndex] = useState(0);
-  let newInputIndex = 0;
-
-  useEffect(() => {
-    input.current.focus();
-    console.log(OTP);
-  }, [nextInputIndex]);
-
-  const handleChangeText = (text: string, index: number) => {
-    const newOTP = { ...OTP };
-    newOTP[index] = text;
-    setOTP(newOTP);
-
-    const lastInputIndex = inputs.length - 1;
-    if (!text) newInputIndex = index === 0 ? 0 : index - 1;
-    else newInputIndex = index === lastInputIndex ? lastInputIndex : index + 1;
-    setNextInputIndex(newInputIndex);
+  const onCodeFilled = async (code: string) => {
+    try {
+      //TODO: Additioanl Verification Required Here To Avoid Spam Fucking checkVerification Remote Function.
+      const success = await checkVerification(phoneNumber, code);
+      if (!success) return updateNotification(setMessage, 'Incorrect Code');
+      else navigation.navigate('Tabs');
+    } catch (error) {
+      console.log(error); //TODO: Implement proper exception handling.
+    }
   };
+
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <Text style={styles.heading}>Input Pin</Text>
-      <View style={styles.OTP}>
-        {inputs.map((inp, index) => {
-          return (
-            <View key={index.toString()} style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                placeholder="0"
-                onChangeText={(text) => handleChangeText(text, index)}
-                placeholderTextColor={colors.black}
-                keyboardAppearance="dark"
-                keyboardType="numeric"
-                maxLength={1}
-                ref={nextInputIndex === index ? input : null}
-              />
-            </View>
-          );
-        })}
-      </View>
-      <TouchableOpacity onPress={submitPin} style={styles.submitIcon}>
-        <Icon type={Icons.Ionicons} name="checkmark-outline" color={colors.white} />
-      </TouchableOpacity>
-    </KeyboardAvoidingView>
+    <SafeAreaView style={styles.wrapper}>
+      {message.text ? (
+        <AnimatedAlert style={styles.error} type={message.type} text={message.text} />
+      ) : null}
+      <Text style={styles.prompt}>Enter the code we sent you</Text>
+      <OTPInputView
+        style={{ width: '80%', height: 200 }}
+        pinCount={6}
+        autoFocusOnLoad
+        codeInputFieldStyle={styles.underlineStyleBase}
+        codeInputHighlightStyle={styles.underlineStyleHighLighted}
+        onCodeFilled={onCodeFilled}
+      />
+    </SafeAreaView>
   );
-};
+}
 
 export default VerificationScreen;
