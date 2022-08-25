@@ -65,6 +65,10 @@ export interface initialType {
   confirmPassword: string;
 }
 
+export interface initialPhoneType {
+  number: string;
+}
+
 export interface submitType {
   title: string;
   color: string;
@@ -81,10 +85,10 @@ export interface formTypeR {
 }
 
 export interface customFormType {
-  children: any;
-  initialValues: any;
-  validationSchema: any;
-  onSubmit: any;
+  children?: any;
+  initialValues?: any;
+  validationSchema?: any;
+  onSubmit?: any;
 }
 
 export interface appLinkType {
@@ -100,10 +104,12 @@ export interface appLinkNavigator {
 }
 
 export interface navigationType {
+  navigate: any;
   navigation: NavigationProp<any, any>;
 }
 
-export interface notificatioNType {
+export interface notificationType {
   type: string;
   text: string;
+  style?: any;
 }
