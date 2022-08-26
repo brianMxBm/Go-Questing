@@ -50,11 +50,6 @@ function ForgotPasswordOTPScreen({ navigation }: navigationType) {
       if (!res) return console.log('error');
 
       navigation.navigate('Verification', { phoneNumber: formattedValue });
-      navigation.reset({
-        //TODO: This is bad practice. We need to find a way to turn off gestures in this screen, aswell as implementing network aborts with redux-thunk.
-        index: 0,
-        routes: [{ name: 'Tabs' }]
-      });
     } catch (error) {
       console.log(error); //TODO: Implement proper exception handling.
     }

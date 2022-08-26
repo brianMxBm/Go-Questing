@@ -54,7 +54,12 @@ function VerificationScreen({ navigation, route }: OtpProps) {
       //TODO: Additioanl Verification Required Here To Avoid Spam Fucking checkVerification Remote Function.
       const success = await checkVerification(phoneNumber, code);
       if (!success) return updateNotification(setMessage, 'Incorrect Code');
-      else navigation.navigate('Tabs');
+      else
+        navigation.reset({
+          //TODO: This is bad practice. We need to find a way to turn off gestures in this screen, aswell as implementing network aborts with redux-thunk.
+          index: 0,
+          routes: [{ name: 'Tabs' }]
+        });
     } catch (error) {
       console.log(error); //TODO: Implement proper exception handling.
     }

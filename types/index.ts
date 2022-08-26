@@ -105,6 +105,7 @@ export interface appLinkNavigator {
 
 export interface navigationType {
   navigate: any;
+  reset: any;
   navigation: NavigationProp<any, any>;
 }
 
