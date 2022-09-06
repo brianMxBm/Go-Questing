@@ -1,12 +1,16 @@
 import React, { useEffect, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, Text, GestureResponderEvent } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import * as Animatable from 'react-native-animatable';
-import Icon, { Icons } from '../theme/Icons';
 import { Screens } from '../constants/screens';
 import { TABS } from '../constants/dimensions';
-import colors from '../theme/colors';
 import { tabButtonType } from '../types/index';
+import * as Animatable from 'react-native-animatable';
+
+const mapIcon = require('../assets/images/icons/mapIcon.png');
+const compassIcon = require('../assets/images/icons/compassIcon.png');
+const swordIcon = require('../assets/images/icons/swordIcon.png');
+const profileIcon = require('../assets/images/icons/profileIcon.png');
+const messageIcon = require('../assets/images/icons/messageIcon.png');
 
 const styles = StyleSheet.create({
   container: {
@@ -17,42 +21,45 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 12,
     color: 'white'
+  },
+  icon: {
+    width: 40,
+    height: 40
   }
 });
 
 const Tab = createBottomTabNavigator();
+
 export const TabArray = [
   {
     route: 'Home',
     label: 'Home',
-    type: Icons.Ionicons,
-    activeIcon: 'home',
-    inActiveIcon: 'home-outline',
-    component: Screens.HomeScreen
+    icon: mapIcon,
+    component: Screens.MapScreen
   },
   {
     route: 'Feed',
     label: 'Feed',
-    type: Icons.Ionicons,
-    activeIcon: 'camera',
-    inActiveIcon: 'camera-outline',
+    icon: compassIcon,
     component: Screens.FeedScreen
   },
   {
-    route: 'Map',
+    route: 'Quests',
     label: 'Quests',
-    type: Icons.Ionicons,
-    activeIcon: 'map',
-    inActiveIcon: 'map-outline',
-    component: Screens.MapScreen
+    icon: swordIcon,
+    component: Screens.QuestScreen
   },
   {
     route: 'Profile',
     label: 'Profile',
-    type: Icons.Ionicons,
-    activeIcon: 'person',
-    inActiveIcon: 'person-outline',
+    icon: profileIcon,
     component: Screens.ProfileScreen
+  },
+  {
+    route: 'Message',
+    label: 'Profile',
+    icon: messageIcon,
+    component: Screens.MessageScreen
   }
 ];
 
@@ -65,7 +72,7 @@ function TabButton(tab: tabButtonType) {
       if (focused) {
         viewRef.current.animate({
           0: { scale: 0.5, rotate: '0deg' },
-          1: { scale: 1, rotate: '0deg' }
+          1: { scale: 1.35, rotate: '0deg' }
         });
       } else {
         viewRef.current.animate({
@@ -79,13 +86,8 @@ function TabButton(tab: tabButtonType) {
   return (
     <TouchableOpacity onPress={tab.onPress} activeOpacity={1} style={styles.container}>
       <Animatable.View ref={viewRef} duration={500} style={styles.container}>
-        <Icon
-          type={tab.item.type}
-          name={focused ? tab.item.activeIcon : tab.item.inActiveIcon}
-          color={focused ? colors.tabs : colors.tabs}
-        />
+        <Image style={styles.icon} source={tab.item.icon}></Image>
       </Animatable.View>
-      <Text style={styles.label}>{tab.item.label}</Text>
     </TouchableOpacity>
   );
 }
@@ -98,7 +100,8 @@ export default function TabNav() {
         tabBarStyle: {
           height: TABS.HEIGHT,
           backgroundColor: 'black',
-          borderTopWidth: 0
+          borderTopWidth: 0,
+          borderRadius: 25
         }
       }}>
       {TabArray.map((item, index) => (
