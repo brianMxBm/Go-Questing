@@ -1,7 +1,6 @@
 import { NavigationProp } from '@react-navigation/native';
-import { FormikErrors } from 'formik';
 import React from 'react';
-import { GestureResponderEvent, Animated } from 'react-native';
+import { GestureResponderEvent, Animated, ImageSourcePropType } from 'react-native';
 import { string } from 'yup';
 import Icon from '../theme/icons';
 
@@ -26,9 +25,7 @@ export interface accessibilityType {
 export interface itemType {
   route: string;
   label: string;
-  type: any; //TODO: CHANGE THIS CAN'T STAY LIKE THIS
-  activeIcon: string;
-  inActiveIcon: string;
+  icon: any;
   component: () => JSX.Element;
 }
 
