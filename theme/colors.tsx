@@ -12,5 +12,7 @@ export default {
   tutorialBG: '#77aeff',
   tutorialBG1: '#ae67fa',
   tutorialBG2: '#fd315d',
-  tutorialBG3: '#90CB4A'
+  tutorialBG3: '#90CB4A',
+  setStatus: '#77767C',
+  boltColor: '#FFCD00'
 };
