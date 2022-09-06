@@ -1,16 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Screens } from '../constants/screens';
 import { TABS } from '../constants/dimensions';
 import { tabButtonType } from '../types/index';
+import { mapIcon, profileIcon, compassIcon, swordIcon, messageIcon } from '../constants/icons';
 import * as Animatable from 'react-native-animatable';
-
-const mapIcon = require('../assets/images/icons/mapIcon.png');
-const compassIcon = require('../assets/images/icons/compassIcon.png');
-const swordIcon = require('../assets/images/icons/swordIcon.png');
-const profileIcon = require('../assets/images/icons/profileIcon.png');
-const messageIcon = require('../assets/images/icons/messageIcon.png');
 
 const styles = StyleSheet.create({
   container: {
