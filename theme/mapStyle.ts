@@ -50,14 +50,6 @@ export default [
     ]
   },
   {
-    featureType: 'administrative.land_parcel',
-    stylers: [
-      {
-        visibility: 'off'
-      }
-    ]
-  },
-  {
     featureType: 'administrative.locality',
     elementType: 'labels.text.fill',
     stylers: [
@@ -76,11 +68,28 @@ export default [
     ]
   },
   {
+    featureType: 'poi.business',
+    stylers: [
+      {
+        visibility: 'off'
+      }
+    ]
+  },
+  {
     featureType: 'poi.park',
     elementType: 'geometry',
     stylers: [
       {
         color: '#181818'
+      }
+    ]
+  },
+  {
+    featureType: 'poi.park',
+    elementType: 'labels.text',
+    stylers: [
+      {
+        visibility: 'off'
       }
     ]
   },
