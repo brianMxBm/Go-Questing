@@ -1,17 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Screens } from '../constants/screens';
 import { TABS } from '../constants/dimensions';
 import { tabButtonType } from '../types/index';
+import { mapIcon, profileIcon, messageIcon, swordIcon, compassIcon } from '../theme/images';
 import * as Animatable from 'react-native-animatable';
 import colors from '../theme/colors';
-
-const mapIcon = require('../assets/images/icons/mapIcon.png');
-const compassIcon = require('../assets/images/icons/compassIcon.png');
-const swordIcon = require('../assets/images/icons/swordIcon.png');
-const profileIcon = require('../assets/images/icons/profileIcon.png');
-const messageIcon = require('../assets/images/icons/messageIcon.png');
 
 const styles = StyleSheet.create({
   container: {
@@ -103,6 +98,7 @@ export default function TabNav() {
           borderTopWidth: 0,
           backgroundColor: colors.black,
           paddingTop: 7,
+          paddingHorizontal: 15,
           borderRadius: 30,
           borderLeftWidth: 0.2,
           borderRightWidth: 0.2,
