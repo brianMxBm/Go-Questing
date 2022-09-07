@@ -5,6 +5,7 @@ import { Screens } from '../constants/screens';
 import { TABS } from '../constants/dimensions';
 import { tabButtonType } from '../types/index';
 import * as Animatable from 'react-native-animatable';
+import colors from '../theme/colors';
 
 const mapIcon = require('../assets/images/icons/mapIcon.png');
 const compassIcon = require('../assets/images/icons/compassIcon.png');
@@ -99,9 +100,14 @@ export default function TabNav() {
         headerShown: false,
         tabBarStyle: {
           height: TABS.HEIGHT,
-          backgroundColor: 'black',
           borderTopWidth: 0,
-          borderRadius: 25
+          backgroundColor: colors.black,
+          paddingTop: 7,
+          borderRadius: 30,
+          borderLeftWidth: 0.2,
+          borderRightWidth: 0.2,
+          position: 'absolute',
+          overflow: 'hidden'
         }
       }}>
       {TabArray.map((item, index) => (
