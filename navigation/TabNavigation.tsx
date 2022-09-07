@@ -37,7 +37,7 @@ export const TabArray = [
     route: 'Feed',
     label: 'Feed',
     icon: compassIcon,
-    component: Screens.FeedScreen
+    component: Screens.JobFeedScreen
   },
   {
     route: 'Quests',
@@ -53,7 +53,7 @@ export const TabArray = [
   },
   {
     route: 'Message',
-    label: 'Profile',
+    label: 'Message',
     icon: messageIcon,
     component: Screens.MessageScreen
   }

@@ -5,6 +5,7 @@ import MapScreen from '../assets/screens/MapScreen';
 import FeedScreen from '../assets/screens/FeedScreen';
 import QuestScreen from '../assets/screens/QuestScreen';
 import MessageScreen from '../assets/screens/MessageScreen';
+import JobFeedScreen from '../assets/screens/JobFeedScreen';
 
 export const Screens = {
   HomeScreen,
@@ -12,5 +13,6 @@ export const Screens = {
   MapScreen,
   FeedScreen,
   QuestScreen,
-  MessageScreen
+  MessageScreen,
+  JobFeedScreen
 };
