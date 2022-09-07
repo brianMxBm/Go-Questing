@@ -1,11 +1,10 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { useEffect } from 'react';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import mapStyle from '../../theme/mapStyle';
 import { WIN_WIDTH, HEIGHT } from '../../constants/dimensions';
 import { getUserLocation } from '../../redux/actions/locationAction';
 import { useAppDispatch, useAppSelector } from '../../redux/Hooks';
-import CenterBox from '../components/CenterBox';
+import mapStyle from '../../theme/mapStyle';
 import HealthStatus from '../components/HealthStatus';
 import CoinStatus from '../components/CoinStatus';
 import SwitchMap from '../components/SwitchMap';
@@ -40,7 +39,7 @@ const styles = StyleSheet.create({
   },
   switchSign: {
     position: 'absolute',
-    bottom: -5,
+    bottom: 80,
     right: 15
   }
 });
