@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import jobs, { jobCategories, popularJobs } from '../../constants/fakeData';
 import {
   View,
@@ -7,9 +7,11 @@ import {
   FlatList,
   TouchableOpacity,
   SafeAreaView,
-  Image
+  Image,
+  ScrollView
 } from 'react-native';
 import colors from '../../theme/colors';
+import { CARD, CARD_WIDTH } from '../../constants/dimensions';
 import { Icons } from '../../theme/Icons';
 
 const styles = StyleSheet.create({
@@ -54,96 +56,107 @@ const styles = StyleSheet.create({
     opacity: 0.8
   },
   image: {
-    width: 40,
-    height: 40,
+    width: CARD_WIDTH * 0.64,
+    height: CARD.HEIGHT,
     alignSelf: 'center',
     resizeMode: 'contain',
     position: 'absolute'
-  }
+  },
+  pictureContainer: {}
 });
 
 export default function JobFeedScreen() {
   const [selectedTab, setSelectedTab] = useState(jobCategories[0]);
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        data={jobCategories}
-        keyExtractor={(item, index) => `${item}-${index}`}
-        horizontal
-        style={styles.flatlist}
-        contentContainerStyle={{ padding: 10 }}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity onPress={() => setSelectedTab(item)}>
-              <View
-                style={[
-                  styles.tab,
-                  { backgroundColor: selectedTab === item ? colors.textColor : 'transparent' }
-                ]}>
-                <Text
+      <ScrollView>
+        <FlatList
+          data={jobCategories}
+          keyExtractor={(item, index) => `${item}-${index}`}
+          horizontal
+          style={styles.flatlist}
+          contentContainerStyle={{ padding: 10 }}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity onPress={() => setSelectedTab(item)}>
+                <View
                   style={[
-                    styles.tabText,
-                    { color: selectedTab === item ? colors.black : colors.white }
+                    styles.tab,
+                    { backgroundColor: selectedTab === item ? colors.confirm : 'transparent' }
                   ]}>
-                  {item}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          );
-        }}
-      />
-      <FlatList
-        data={jobs}
-        keyExtractor={(item) => item.key}
-        scrollEnabled={false}
-        style={{ flex: 1, padding: 10 }}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity
-              onPress={() => {
-                console.log('hey');
-              }}
-              style={{ width: 10, height: 10 }}>
-              <View style={{ flex: 1, width: 100, height: 100 }}>
-                <View style={{ flex: 1, padding: 6 }}>
+                  <Text
+                    style={[
+                      styles.tabText,
+                      { color: selectedTab === item ? colors.black : colors.white }
+                    ]}>
+                    {item}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+        />
+        <FlatList
+          data={jobs}
+          keyExtractor={(item) => item.key}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          snapToInterval={CARD.FULL_SIZE}
+          decelerationRate="fast"
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity
+                style={{ width: CARD.WIDTH, height: CARD.HEIGHT, padding: 10 }}
+                onPress={() => {
+                  console.log('hey');
+                }}>
+                <View style={{ flex: 1, padding: 10, justifyContent: 'center' }}>
                   <View
                     style={[
                       StyleSheet.absoluteFillObject,
-                      { backgroundColor: colors.white, borderRadius: 20 }
-                    ]}></View>
-                  <Text style={styles.type}>{item.type}</Text>
-                  <Text style={styles.subType}>{item.subType}</Text>
-                </View>
-                <Image source={{ uri: item.image }} style={styles.image} />
-              </View>
-            </TouchableOpacity>
-          );
-        }}></FlatList>
-      <FlatList
-        data={popularJobs}
-        keyExtractor={(item) => item.key}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => {
-          return (
-            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 6 }}>
-              <Image style={styles.jobImage} source={{ uri: item.image }} />
-              <View style={{ flex: 1 }}>
-                <Text style={styles.jobType}>{item.type}</Text>
-                <View style={{ flexDirection: 'row' }}>
-                  <Icons.AntDesign
-                    name="star"
-                    size={16}
-                    color={colors.boltColor}
-                    style={{ marginRight: 6 }}
+                      { backgroundColor: item.color, borderRadius: 16 }
+                    ]}
                   />
-                  <Text style={{ fontWeight: '700', color: colors.white }}>{item.rating} </Text>
+                  <View style={{ position: 'absolute', top: 10, left: 10, margin: 10 }}>
+                    <Text style={styles.type}>{item.type}</Text>
+                    <Text style={styles.subType}>{item.subType}</Text>
+                  </View>
+                  <Image source={{ uri: item.image }} style={styles.image} />
+                  <View style={{ position: 'absolute', bottom: 10, flexDirection: 'row' }}>
+                    <Text style={styles.type}>asffasf</Text>
+                    <View style={styles.pictureContainer}></View>
+                  </View>
                 </View>
+              </TouchableOpacity>
+            );
+          }}></FlatList>
+        <FlatList
+          data={popularJobs}
+          keyExtractor={(item) => item.key}
+          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
+          renderItem={({ item }) => {
+            return (
+              <View style={{ flexDirection: 'row', alignItems: 'center', padding: 6 }}>
+                <Image style={styles.jobImage} source={{ uri: item.image }} />
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.jobType}>{item.type}</Text>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Icons.AntDesign
+                      name="star"
+                      size={16}
+                      color={colors.boltColor}
+                      style={{ marginRight: 6 }}
+                    />
+                    <Text style={{ fontWeight: '700', color: colors.white }}>{item.rating} </Text>
+                  </View>
+                </View>
+                <Text style={styles.jobPay}>{item.pay}</Text>
               </View>
-              <Text style={styles.jobPay}>{item.pay}</Text>
-            </View>
-          );
-        }}></FlatList>
+            );
+          }}></FlatList>
+      </ScrollView>
     </SafeAreaView>
   );
 }

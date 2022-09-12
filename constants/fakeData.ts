@@ -91,7 +91,7 @@ export default data.map((item, index) => ({
   ...item,
   key: faker.datatype.uuid(),
   subType: faker.commerce.productName(),
-  color: `${colors[index % colors.length]}66`,
+  color: `${colors[index % colors.length]}`,
   fullColor: colors[index % colors.length],
   description: [...Array(2).keys()].map(faker.commerce.productDescription).join('. '),
   pay: `${faker.finance.amount(5, 10, 0, '$')}`
