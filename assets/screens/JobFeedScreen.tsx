@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import jobs, { jobCategories, popularJobs } from '../../constants/fakeData';
 import {
   View,
   Text,
@@ -13,6 +12,10 @@ import {
 import colors from '../../theme/colors';
 import { CARD, CARD_WIDTH } from '../../constants/dimensions';
 import { Icons } from '../../theme/Icons';
+import jobs, { jobCategories, popularJobs } from '../../constants/fakeData';
+import { Avatar } from 'react-native-paper';
+import { profilePicture } from '../../theme/images';
+import ProfileCircle from '../components/ProfileCircle';
 
 const styles = StyleSheet.create({
   container: {
@@ -62,7 +65,27 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     position: 'absolute'
   },
-  pictureContainer: {}
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+    overflow: 'hidden',
+    alignItems: 'center'
+  },
+  active: {
+    backgroundColor: colors.confirm,
+    position: 'absolute',
+    bottom: 7,
+    right: 15,
+    borderWidth: 1,
+    padding: 4,
+    height: 12,
+    width: 12,
+    borderRadius: 10
+  },
+  imageFrame: {
+    flex: 1
+  }
 });
 
 export default function JobFeedScreen() {
@@ -123,9 +146,22 @@ export default function JobFeedScreen() {
                     <Text style={styles.subType}>{item.subType}</Text>
                   </View>
                   <Image source={{ uri: item.image }} style={styles.image} />
-                  <View style={{ position: 'absolute', bottom: 10, flexDirection: 'row' }}>
-                    <Text style={styles.type}>asffasf</Text>
-                    <View style={styles.pictureContainer}></View>
+                  <View
+                    style={{
+                      //position: 'absolute',
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      bottom: -150 //TODO: Change this. It's extreamly bad practivece
+                    }}>
+                    <Text style={styles.type}>Brian Melgar</Text>
+                    <View style={styles.profileImage}>
+                      <Image
+                        source={profilePicture}
+                        style={styles.imageFrame}
+                        resizeMode="center"></Image>
+                    </View>
+                    <View style={styles.active} />
                   </View>
                 </View>
               </TouchableOpacity>
