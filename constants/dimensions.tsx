@@ -7,7 +7,7 @@ export const HEIGHT = Dimensions.get('screen').height;
 export const WIN_WIDTH = Dimensions.get('window').width;
 export const WIN_HEIGHT = Dimensions.get('window').height;
 
-export const SPACING = 50;
+export const SPACING = 10; //TODO: Fix Spacing For JobFeedScreen Card Flatlist
 export const CARD_WIDTH = WIDTH * 0.64;
 export const CARD_HEIGHT = CARD_WIDTH * 1.4;
 export const FULL_SIZE = CARD_WIDTH + SPACING * 2;

@@ -10,12 +10,12 @@ import {
   ScrollView
 } from 'react-native';
 import colors from '../../theme/colors';
-import { CARD, CARD_WIDTH } from '../../constants/dimensions';
+import { CARD } from '../../constants/dimensions';
 import { Icons } from '../../theme/Icons';
 import jobs, { jobCategories, popularJobs } from '../../constants/fakeData';
-import { Avatar } from 'react-native-paper';
 import { profilePicture } from '../../theme/images';
-import ProfileCircle from '../components/ProfileCircle';
+import { faker } from '@faker-js/faker';
+import { navigationType } from '../../types';
 
 const styles = StyleSheet.create({
   container: {
@@ -59,15 +59,15 @@ const styles = StyleSheet.create({
     opacity: 0.8
   },
   image: {
-    width: CARD_WIDTH * 0.64,
+    width: CARD.WIDTH * 0.75,
     height: CARD.HEIGHT,
     alignSelf: 'center',
     resizeMode: 'contain',
     position: 'absolute'
   },
   profileImage: {
-    width: 60,
-    height: 60,
+    width: 70,
+    height: 70,
     borderRadius: 100,
     overflow: 'hidden',
     alignItems: 'center'
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function JobFeedScreen() {
+export default function JobFeedScreen({ navigation }: navigationType) {
   const [selectedTab, setSelectedTab] = useState(jobCategories[0]);
   return (
     <SafeAreaView style={styles.container}>
@@ -120,19 +120,19 @@ export default function JobFeedScreen() {
             );
           }}
         />
-        <FlatList
+        <FlatList //TODO: The style of this flatlist specifically the issue with "balancing" ht ecards when scrolling
           data={jobs}
           keyExtractor={(item) => item.key}
           showsHorizontalScrollIndicator={false}
           horizontal
-          snapToInterval={CARD.FULL_SIZE}
+          snapToInterval={CARD.FULL_SIZE} //TODO: Play around with this ratio.
           decelerationRate="fast"
           renderItem={({ item }) => {
             return (
               <TouchableOpacity
                 style={{ width: CARD.WIDTH, height: CARD.HEIGHT, padding: 10 }}
                 onPress={() => {
-                  console.log('hey');
+                  navigation.navigate('Details', { item });
                 }}>
                 <View style={{ flex: 1, padding: 10, justifyContent: 'center' }}>
                   <View
@@ -142,8 +142,23 @@ export default function JobFeedScreen() {
                     ]}
                   />
                   <View style={{ position: 'absolute', top: 10, left: 10, margin: 10 }}>
-                    <Text style={styles.type}>{item.type}</Text>
-                    <Text style={styles.subType}>{item.subType}</Text>
+                    <Text numberOfLines={1} style={styles.type}>
+                      {item.type}
+                    </Text>
+                    <View style={{ flexDirection: 'column', paddingTop: 5 }}>
+                      <View
+                        style={{
+                          flexDirection: 'row'
+                        }}>
+                        <Icons.AntDesign
+                          name="eye"
+                          size={25}
+                          color={colors.black} //TODO: Create dedicated color schemes for icons.
+                          style={{ paddingRight: 5 }}
+                        />
+                        <Text style={styles.type}>{faker.random.numeric(4)}</Text>
+                      </View>
+                    </View>
                   </View>
                   <Image source={{ uri: item.image }} style={styles.image} />
                   <View
