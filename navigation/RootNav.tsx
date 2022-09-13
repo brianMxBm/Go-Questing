@@ -11,7 +11,9 @@ import VerificationScreen from '../assets/screens/VerificationScreen';
 import OnBoardingScreen from '../assets/screens/onBoardingScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
+import JobDetailScreen from '../assets/screens/JobDetailScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import JobFeedScreen from '../assets/screens/JobFeedScreen';
 const Stack = createNativeStackNavigator();
 export default function RootStackNavigator() {
   const [viewed, setViewed] = useState(false);
@@ -43,15 +45,12 @@ export default function RootStackNavigator() {
           screenOptions={{
             headerShown: false
           }}>
-          <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Forgot" component={ForgotPasswordOTPScreen} />
-          <Stack.Screen name="Verification" component={VerificationScreen} />
           <Stack.Screen name="Tabs" component={TabNavigation} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
-          <Stack.Screen name="Feed" component={FeedScreen} />
+          <Stack.Screen name="Feed" component={JobFeedScreen} />
           <Stack.Screen name="Map" component={MapScreen} />
+          <Stack.Screen name="Details" component={JobDetailScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );
@@ -62,15 +61,12 @@ export default function RootStackNavigator() {
           screenOptions={{
             headerShown: false
           }}>
-          <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Forgot" component={ForgotPasswordOTPScreen} />
-          <Stack.Screen name="Verification" component={VerificationScreen} />
           <Stack.Screen name="Tabs" component={TabNavigation} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
-          <Stack.Screen name="Feed" component={FeedScreen} />
+          <Stack.Screen name="Feed" component={JobFeedScreen} />
           <Stack.Screen name="Map" component={MapScreen} />
+          <Stack.Screen name="Details" component={JobDetailScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );
