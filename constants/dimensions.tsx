@@ -12,19 +12,19 @@ export const CARD_WIDTH = WIDTH * 0.64;
 export const CARD_HEIGHT = CARD_WIDTH * 1.4;
 export const FULL_SIZE = CARD_WIDTH + SPACING * 2;
 
-export const SCREEN = {
+export const WINDOW = {
   WIDTH,
   HEIGHT
 };
 
-export const WINDOW = {
-  WIN_WIDTH,
-  WIN_HEIGHT
-};
-
 export const TABS = {
   WIDTH,
-  HEIGHT: 85
+  HEIGHT: 64
+};
+
+export const SCREEN = {
+  WIDTH,
+  HEIGHT
 };
 
 export const CARD = {
