@@ -1,7 +1,6 @@
 import { NavigationProp } from '@react-navigation/native';
-import { FormikErrors } from 'formik';
 import React from 'react';
-import { GestureResponderEvent, Animated } from 'react-native';
+import { GestureResponderEvent, Animated, ImageSourcePropType } from 'react-native';
 import { string } from 'yup';
 import Icon from '../theme/icons';
 
@@ -26,9 +25,7 @@ export interface accessibilityType {
 export interface itemType {
   route: string;
   label: string;
-  type: any; //TODO: CHANGE THIS CAN'T STAY LIKE THIS
-  activeIcon: string;
-  inActiveIcon: string;
+  icon: any;
   component: () => JSX.Element;
 }
 
@@ -65,6 +62,10 @@ export interface initialType {
   confirmPassword: string;
 }
 
+export interface initialPhoneType {
+  number: string;
+}
+
 export interface submitType {
   title: string;
   color: string;
@@ -81,10 +82,10 @@ export interface formTypeR {
 }
 
 export interface customFormType {
-  children: any;
-  initialValues: any;
-  validationSchema: any;
-  onSubmit: any;
+  children?: any;
+  initialValues?: any;
+  validationSchema?: any;
+  onSubmit?: any;
 }
 
 export interface appLinkType {
@@ -100,10 +101,13 @@ export interface appLinkNavigator {
 }
 
 export interface navigationType {
+  navigate: any;
+  reset: any;
   navigation: NavigationProp<any, any>;
 }
 
-export interface notificatioNType {
+export interface notificationType {
   type: string;
   text: string;
+  style?: any;
 }
