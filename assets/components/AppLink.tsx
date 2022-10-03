@@ -1,7 +1,11 @@
 import React from 'react';
-import { StyleSheet, Pressable, Text, TouchableOpacity } from 'react-native';
+import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import colors from '../../theme/colors';
-import { appLinkType } from '../../types';
+
+export interface appLinkType {
+  title: string;
+  onPress?: ((event: GestureResponderEvent) => void) | undefined;
+}
 
 const styles = StyleSheet.create({
   link: {

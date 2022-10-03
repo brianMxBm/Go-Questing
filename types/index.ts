@@ -4,15 +4,6 @@ import { GestureResponderEvent, Animated, ImageSourcePropType } from 'react-nati
 import { string } from 'yup';
 import Icon from '../theme/icons';
 
-export interface iconType {
-  //interface for icons
-  type: React.ElementType;
-  name: string;
-  color: string;
-  size?: number;
-  style?: React.CSSProperties;
-}
-
 export interface accessibilityType {
   //TODO: Replace with proper object type (not sure what it is)
   disabled: boolean;
@@ -86,18 +77,6 @@ export interface customFormType {
   initialValues?: any;
   validationSchema?: any;
   onSubmit?: any;
-}
-
-export interface appLinkType {
-  title: string;
-  onPress?: ((event: GestureResponderEvent) => void) | undefined;
-}
-
-export interface appLinkNavigator {
-  leftLinkText: string;
-  rightLinkText: string;
-  onLeftLinkPress: ((event: GestureResponderEvent) => void) | undefined;
-  onRightLinkPress: ((event: GestureResponderEvent) => void) | undefined;
 }
 
 export interface navigationType {

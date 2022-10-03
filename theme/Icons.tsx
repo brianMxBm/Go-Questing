@@ -11,9 +11,16 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Foundation from 'react-native-vector-icons/Foundation';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-
-import { iconType } from '../types/index';
 import { View } from 'react-native-animatable';
+
+export interface iconType {
+  //interface for icons
+  type: React.ElementType;
+  name: string;
+  color: string;
+  size?: number;
+  style?: React.CSSProperties;
+}
 
 export const Icons = {
   MaterialCommunityIcons,

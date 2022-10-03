@@ -1,7 +1,13 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { appLinkNavigator } from '../../types';
+import { View, GestureResponderEvent, StyleSheet } from 'react-native';
 import AppLink from './AppLink';
+
+export interface appLinkNavigator {
+  leftLinkText: string;
+  rightLinkText: string;
+  onLeftLinkPress: ((event: GestureResponderEvent) => void) | undefined;
+  onRightLinkPress: ((event: GestureResponderEvent) => void) | undefined;
+}
 
 const style = StyleSheet.create({
   linkContainer: {
