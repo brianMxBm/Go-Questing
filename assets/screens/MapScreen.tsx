@@ -8,7 +8,7 @@ import mapStyle from '../../theme/mapStyle';
 import HealthStatus from '../components/HealthStatus';
 import CoinStatus from '../components/CoinStatus';
 import SwitchMap from '../components/SwitchMap';
-
+import CenterBox from '../components/CenterBox';
 const styles = StyleSheet.create({
   container: {
     display: 'flex'
@@ -41,13 +41,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 80,
     right: 15
+  },
+  centerbox: {
+    position: 'absolute',
+    top: 80,
+    right: 20
   }
 });
 
 export default function MapScreen() {
   const dispatch = useAppDispatch();
   const { location } = useAppSelector((state) => state.location);
-
+  const { mapCenterLocation } = useAppSelector((state) => state.map);
   useEffect(() => {
     if (location.latitude == 0) {
       dispatch(getUserLocation());
@@ -67,8 +72,8 @@ export default function MapScreen() {
         showsUserLocation
         customMapStyle={mapStyle}
         region={{
-          latitude: location.latitude,
-          longitude: location.longitude,
+          latitude: mapCenterLocation.latitude ? mapCenterLocation.latitude : location.latitude,
+          longitude: mapCenterLocation.longitude ? mapCenterLocation.longitude : location.longitude,
           latitudeDelta: 0.0015,
           longitudeDelta: 0.0121
         }}
@@ -81,6 +86,9 @@ export default function MapScreen() {
       </View>
       <View style={styles.switchSign}>
         <SwitchMap />
+      </View>
+      <View style={styles.centerbox}>
+        <CenterBox />
       </View>
     </View>
   );
