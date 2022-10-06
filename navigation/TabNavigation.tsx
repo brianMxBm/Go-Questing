@@ -68,11 +68,11 @@ function TabButton(tab: tabButtonType) {
       if (focused) {
         viewRef.current.animate({
           0: { scale: 0.5, rotate: '0deg' },
-          1: { scale: 1.35, rotate: '0deg' }
+          1: { scale: 1.22, rotate: '360deg' }
         });
       } else {
         viewRef.current.animate({
-          0: { scale: 1.2, rotate: '0deg' },
+          0: { scale: 1.22, rotate: '360deg' },
           1: { scale: 1, rotate: '0deg' }
         });
       }
@@ -97,11 +97,12 @@ export default function TabNav() {
           height: TABS.HEIGHT,
           borderTopWidth: 0,
           backgroundColor: colors.black,
-          paddingTop: 7,
+          paddingTop: 15,
           paddingHorizontal: 15,
-          borderRadius: 30,
-          borderLeftWidth: 0.2,
-          borderRightWidth: 0.2,
+          borderRadius: 25,
+          borderColor: colors.white,
+          borderLeftWidth: 0,
+          borderRightWidth: 0,
           position: 'absolute',
           overflow: 'hidden'
         }
