@@ -1,8 +1,6 @@
 import { NavigationProp } from '@react-navigation/native';
 import React from 'react';
-import { GestureResponderEvent, Animated, ImageSourcePropType } from 'react-native';
-import { string } from 'yup';
-import Icon from '../theme/icons';
+import { GestureResponderEvent } from 'react-native';
 
 export interface accessibilityType {
   //TODO: Replace with proper object type (not sure what it is)
@@ -61,10 +59,7 @@ export interface submitType {
   title: string;
   color: string;
 }
-export interface formType {
-  placeholderText: string;
-  name: string;
-}
+
 export interface formTypeR {
   placeholderText: string;
   name: string;
@@ -83,10 +78,4 @@ export interface navigationType {
   navigate: any;
   reset: any;
   navigation: NavigationProp<any, any>;
-}
-
-export interface notificationType {
-  type: string;
-  text: string;
-  style?: any;
 }
