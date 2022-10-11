@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Icons } from '../../theme/Icons';
-import { CARD, SPACING, HEIGHT, CARD_HEIGHT } from '../../constants/dimensions';
+import { CARD, SPACING, CARD_HEIGHT } from '../../constants/dimensions';
 const styles = StyleSheet.create({
   type: {
     fontWeight: '800',
