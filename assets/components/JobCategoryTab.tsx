@@ -1,7 +1,6 @@
 import colors from '../../theme/colors';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
 import { jobCategories } from '../../constants/fakeData';
 
 const styles = StyleSheet.create({
@@ -21,26 +20,21 @@ const styles = StyleSheet.create({
 });
 interface job {
   category: string;
+  selectedtab: string;
 }
 
-const JobCategoryTab = ({ category }: job) => {
-  const [selectedTab, setSelectedTab] = useState(jobCategories[0]);
+const JobCategoryTab = ({ category, selectedtab }: job) => {
   return (
-    <TouchableOpacity onPress={() => setSelectedTab(category)}>
-      <View
-        style={[
-          styles.tab,
-          { backgroundColor: selectedTab === category ? colors.confirm : 'transparent' }
-        ]}>
-        <Text
-          style={[
-            styles.tabText,
-            { color: selectedTab === category ? colors.black : colors.white }
-          ]}>
-          {category}
-        </Text>
-      </View>
-    </TouchableOpacity>
+    <View
+      style={[
+        styles.tab,
+        { backgroundColor: selectedtab === category ? colors.confirm : 'transparent' }
+      ]}>
+      <Text
+        style={[styles.tabText, { color: selectedtab === category ? colors.black : colors.white }]}>
+        {category}
+      </Text>
+    </View>
   );
 };
 

@@ -52,12 +52,13 @@ interface jobs {
   color: string;
   navigation: NavigationProp<any, any>;
 }
+
 const JobCard = ({ image, type, color, navigation }: jobs) => {
   return (
     <TouchableOpacity
       style={{ width: CARD.WIDTH, height: CARD.HEIGHT, padding: 10 }}
       onPress={() => {
-        navigation.navigate('Details', { type, image, color });
+        navigation.navigate('Details', { image, type, color });
       }}>
       <View style={{ flex: 1, padding: 10, justifyContent: 'center' }}>
         <View
