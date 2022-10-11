@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, FlatList, SafeAreaView } from 'react-native';
 import colors from '../../theme/colors';
 import { CARD } from '../../constants/dimensions';

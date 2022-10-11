@@ -3,7 +3,6 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Icons } from '../../theme/Icons';
 import { CARD, SPACING, CARD_HEIGHT } from '../../constants/dimensions';
-import { NavigationProp } from '@react-navigation/native';
 const styles = StyleSheet.create({
   type: {
     fontWeight: '800',
