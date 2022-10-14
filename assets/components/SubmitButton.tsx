@@ -3,7 +3,12 @@ import { useFormikContext } from 'formik';
 import React, { useEffect } from 'react';
 import colors from '../../theme/colors';
 import { WIDTH } from '../../constants/dimensions';
-import { initialType, submitType } from '../../types';
+import { initialType } from '../../types';
+
+interface submitType {
+  title: string;
+  color: string;
+}
 
 const styles = StyleSheet.create({
   submit: {
@@ -19,6 +24,7 @@ const styles = StyleSheet.create({
 });
 
 const SubmitButton = ({ title, color }: submitType) => {
+  //TODO: Initial Type Must Be Dynamic
   const { handleSubmit, isSubmitting } = useFormikContext<initialType>();
 
   return (
