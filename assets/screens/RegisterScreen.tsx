@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { signUp } from '../../utils/auth';
+import { updateNotification } from '../../utils/helper';
+import { RegisterScreenNavigationProp } from '../../navigation/types/NavTypes';
+import { FormikHandlers, FormikProps } from 'formik';
 import * as yup from 'yup';
 import FormInput from '../components/FormInput';
 import SubmitButton from '../components/SubmitButton';
@@ -8,18 +11,16 @@ import CustomFormik from '../components/CustomFomik';
 import colors from '../../theme/colors';
 import AnimatedAlert from '../components/AnimatedAlert';
 import LinkNavigator from '../components/LinkNavigator';
-import { navigationType } from '../../types';
-import { updateNotification } from '../../utils/helper';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: colors.white
   },
   textDanger: {
-    color: 'red'
+    color: colors.errors
   }
 });
 
@@ -49,8 +50,11 @@ const validationSchema = yup.object().shape({
     .required('Please Confirm Password')
 });
 
-function RegisterScreen({ navigation }: navigationType) {
-  const handleSignUp = async (values: any, formikActions: any) => {
+function RegisterScreen({ navigation }: RegisterScreenNavigationProp) {
+  const handleSignUp = async (
+    values: typeof initialValues,
+    formikActions: FormikProps<FormikHandlers>
+  ) => {
     const res = await signUp(values);
     formikActions.setSubmitting(false);
     if (!res.success) return updateNotification(setMessage, res.error);
@@ -68,7 +72,6 @@ function RegisterScreen({ navigation }: navigationType) {
   });
 
   return (
-    //Add secureTextEntry as a prop to FormInput Component in production.
     <>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={{ bottom: 50 }}>
@@ -80,8 +83,12 @@ function RegisterScreen({ navigation }: navigationType) {
             onSubmit={handleSignUp}>
             <FormInput name="name" placeholderText="Name" />
             <FormInput name="email" placeholderText="Email" />
-            <FormInput name="password" placeholderText="Password" />
-            <FormInput name="confirmPassword" placeholderText="Password Confirmation" />
+            <FormInput secure={true} name="password" placeholderText="Password" />
+            <FormInput
+              secure={true}
+              name="confirmPassword"
+              placeholderText="Password Confirmation"
+            />
             <SubmitButton color={colors.buttons} title="Sign-Up" />
           </CustomFormik>
           <LinkNavigator
