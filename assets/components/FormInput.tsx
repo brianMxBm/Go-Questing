@@ -1,9 +1,16 @@
 import { useFormikContext } from 'formik';
 import React from 'react';
-import { View, TextInput, StyleSheet, Text } from 'react-native';
+import { View, TextInput, StyleSheet, Text, ViewStyle } from 'react-native';
 import { WIN_HEIGHT, WIN_WIDTH } from '../../constants/dimensions';
 import colors from '../../theme/colors';
-import { formType, initialType } from '../../types';
+import { initialType } from '../../types';
+
+export interface formType {
+  placeholderText: string;
+  name: string;
+  style?: ViewStyle;
+  secure?: boolean;
+}
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -46,14 +53,11 @@ const styles = StyleSheet.create({
     borderWidth: 1
   }
 });
-function FormInput({ placeholderText, name }: formType) {
-  //TODO: Remove Rest Props.
+function FormInput({ placeholderText, name, style, secure }: formType) {
   const { values, errors, touched, handleChange, handleBlur } = useFormikContext<initialType>();
-
   const value = values[name as keyof initialType];
   const error = errors[name as keyof initialType];
   const isInputTouched = touched[name as keyof initialType];
-
   return (
     <View>
       <>
@@ -61,16 +65,29 @@ function FormInput({ placeholderText, name }: formType) {
           <Text style={{ color: 'red', paddingHorizontal: 5 }}>{error}</Text>
         ) : null}
       </>
-      <View style={styles.inputContainer}>
-        <TextInput
-          value={value}
-          style={styles.input}
-          onChangeText={handleChange(name)}
-          numberOfLines={1}
-          onBlur={handleBlur(name)}
-          placeholder={placeholderText}
-          placeholderTextColor="#666"
-        />
+      <View style={[styles.inputContainer, style]}>
+        {secure ? (
+          <TextInput
+            value={value}
+            secureTextEntry={true}
+            style={styles.input}
+            onChangeText={handleChange(name)}
+            numberOfLines={1}
+            onBlur={handleBlur(name)}
+            placeholder={placeholderText}
+            placeholderTextColor="#666"
+          />
+        ) : (
+          <TextInput
+            value={value}
+            style={styles.input}
+            onChangeText={handleChange(name)}
+            numberOfLines={1}
+            onBlur={handleBlur(name)}
+            placeholder={placeholderText}
+            placeholderTextColor="#666"
+          />
+        )}
       </View>
     </View>
   );
