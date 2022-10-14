@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { HomeStackParamList } from './types/NavTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HomeScreen from '../assets/screens/HomeScreen';
 import MapScreen from '../assets/screens/MapScreen';
 import ProfileScreen from '../assets/screens/ProfileScreen';
-import FeedScreen from '../assets/screens/FeedScreen';
-import TabNavigation from './TabNavigation';
+import FeedScreen from '../assets/screens/PostJobScreen';
 import RegisterScreen from '../assets/screens/RegisterScreen';
 import LoginScreen from '../assets/screens/LoginScreen';
-import ForgotPasswordOTPScreen from '../assets/screens/ForgotPasswordOTPScreen';
+import ForgotPasswordOTPScreen from '../assets/screens/ForgotPasswordScreen';
 import VerificationScreen from '../assets/screens/VerificationScreen';
-import OnBoardingScreen from '../assets/screens/onBoardingScreen';
+import TutorialScreen from '../assets/screens/TutorialScreen';
 import JobFeedScreen from '../assets/screens/JobFeedScreen';
-import { HomeStackNavigatorParamList } from './types/NavigationTypes';
 import JobDetailScreen from '../assets/screens/JobDetailScreen';
+import Tabs from './Tabs';
 
-const HomeStack = createNativeStackNavigator<HomeStackNavigatorParamList>();
+const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
 const HomeStackNavigator = () => {
+  //TODO: Implement With Redux.
   const [viewed, setViewed] = useState(false);
   const clearAsyncStorage = async () => {
     AsyncStorage.clear();
@@ -43,11 +44,13 @@ const HomeStackNavigator = () => {
         screenOptions={{
           headerShown: false
         }}>
-        <HomeStack.Screen name="Tabs" component={TabNavigation} />
+        <HomeStack.Screen name="Register" component={RegisterScreen} />
+        <HomeStack.Screen name="Login" component={LoginScreen} />
+        <HomeStack.Screen name="Forgot" component={ForgotPasswordOTPScreen} />
+        <HomeStack.Screen name="Verification" component={VerificationScreen} />
+        <HomeStack.Screen name="Tabs" component={Tabs} />
         <HomeStack.Screen name="Home" component={HomeScreen} />
         <HomeStack.Screen name="Profile" component={ProfileScreen} />
-        <HomeStack.Screen name="Feed" component={JobFeedScreen} />
-        <HomeStack.Screen name="Map" component={MapScreen} />
         <HomeStack.Screen name="Details" component={JobDetailScreen} />
       </HomeStack.Navigator>
     );
@@ -57,11 +60,13 @@ const HomeStackNavigator = () => {
         screenOptions={{
           headerShown: false
         }}>
-        <HomeStack.Screen name="Tabs" component={TabNavigation} />
+        <HomeStack.Screen name="Register" component={RegisterScreen} />
+        <HomeStack.Screen name="Login" component={LoginScreen} />
+        <HomeStack.Screen name="Forgot" component={ForgotPasswordOTPScreen} />
+        <HomeStack.Screen name="Verification" component={VerificationScreen} />
+        <HomeStack.Screen name="Tabs" component={Tabs} />
         <HomeStack.Screen name="Home" component={HomeScreen} />
         <HomeStack.Screen name="Profile" component={ProfileScreen} />
-        <HomeStack.Screen name="Feed" component={JobFeedScreen} />
-        <HomeStack.Screen name="Map" component={MapScreen} />
         <HomeStack.Screen name="Details" component={JobDetailScreen} />
       </HomeStack.Navigator>
     );
