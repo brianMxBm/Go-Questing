@@ -47,7 +47,7 @@ export default function CoinStatus() {
   return (
     <View style={styles.container}>
       <View style={styles.capsuleContainer}>
-        <Coin style={styles.icon}></Coin>
+        <Coin style={styles.icon} />
         <View style={styles.textContainer}>
           <Text style={{ fontWeight: '900', fontSize: 22 }}>200</Text>
         </View>

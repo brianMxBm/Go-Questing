@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignContent": "center",
+        "backgroundColor": "#77767C",
+        "borderColor": "#000000",
+        "borderRadius": 40,
+        "borderWidth": 4,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "padding": 8,
+        "position": "relative",
+      }
+    }
+  >
+    <SvgMock
+      style={
+        Object {
+          "height": 35,
+          "width": 30,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "paddingLeft": 5,
+          "paddingRight": 5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "fontSize": 22,
+            "fontWeight": "900",
+          }
+        }
+      >
+        200
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <SvgMock
+        style={
+          Object {
+            "height": 35,
+            "width": 30,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
