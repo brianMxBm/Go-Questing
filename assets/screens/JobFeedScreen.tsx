@@ -28,20 +28,20 @@ interface jobPost {
 
 // this function will create the fake data in the database for jobs which can be displayed as markers on the map.
 // only run this function once then comment out.
-function getTitle(cat: string) {
-  switch (cat) {
-    case 'auto repair':
-      return 'fix my car';
-    case 'yard work':
-      return 'mow my lawn';
-    case 'plumbing':
-      return 'unclog a drain';
-    case 'paint':
-      return 'paint my house';
-    default:
-      return '';
-  }
-}
+// function getTitle(cat: string) {
+//   switch (cat) {
+//     case 'auto repair':
+//       return 'fix my car';
+//     case 'yard work':
+//       return 'mow my lawn';
+//     case 'plumbing':
+//       return 'unclog a drain';
+//     case 'paint':
+//       return 'paint my house';
+//     default:
+//       return '';
+//   }
+// }
 
 // async function superMarioFaker() {
 //   for (let i = 0; i < 25; ++i) {
