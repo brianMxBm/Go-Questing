@@ -4,7 +4,7 @@ import { WIDTH } from '../../constants/dimensions';
 import { DATA } from '../../constants/slides';
 import colors from '../../theme/colors';
 
-function Indicator({ scrollX }: any) {
+function Indicator({ scrollX }: { scrollX: Animated.Value }) {
   //TODO: Find Type Of ScrollX
   return (
     <View style={{ position: 'absolute', bottom: 110, flexDirection: 'row' }}>

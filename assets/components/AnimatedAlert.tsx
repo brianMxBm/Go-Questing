@@ -11,11 +11,13 @@ export interface notificationType {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 5
   },
   text: {
     color: colors.white,
-    fontSize: 15
+    fontSize: 15,
+    fontWeight: '900'
   }
 });
 

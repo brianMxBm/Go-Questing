@@ -30,12 +30,6 @@ const initialValues = {
   location: ''
 };
 
-const [message, setMessage] = useState({
-  //TODO:Implement utilzing Redux.
-  text: '',
-  type: ''
-});
-
 const validationSchema = yup.object().shape({
   postTitle: yup.string().trim().required('Title Is Missing'),
   compensation: yup.string().trim().required('Compensation Is Missing'),
@@ -45,6 +39,12 @@ const validationSchema = yup.object().shape({
 });
 
 function PostJobScreen() {
+  const [message, setMessage] = useState({
+    //TODO:Implement utilzing Redux.
+    text: '',
+    type: ''
+  });
+
   const handlePostJob = async (
     values: typeof initialValues,
     formikActions: FormikProps<FormikHandlers>
