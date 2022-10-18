@@ -9,6 +9,7 @@ import HealthStatus from '../components/HealthStatus';
 import CoinStatus from '../components/CoinStatus';
 import SwitchMap from '../components/SwitchMap';
 import CenterBox from '../components/CenterBox';
+
 const styles = StyleSheet.create({
   container: {
     display: 'flex'
