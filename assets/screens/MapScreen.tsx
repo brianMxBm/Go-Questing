@@ -11,6 +11,7 @@ import SwitchMap from '../components/SwitchMap';
 import CenterBox from '../components/CenterBox';
 import { getJobs } from '../../utils/jobActions';
 import { profilePicture } from '../../theme/images';
+
 const styles = StyleSheet.create({
   container: {
     display: 'flex'
