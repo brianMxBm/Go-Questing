@@ -10,7 +10,7 @@ import CoinStatus from '../components/CoinStatus';
 import SwitchMap from '../components/SwitchMap';
 import CenterBox from '../components/CenterBox';
 import { getJobs } from '../../utils/jobActions';
-import { profileIcon } from '../../constants/icons';
+import { profilePicture } from '../../theme/images';
 const styles = StyleSheet.create({
   container: {
     display: 'flex'
@@ -50,21 +50,21 @@ const styles = StyleSheet.create({
     right: 20
   }
 });
-async function getjobs(latitude: number, longitude: number) {
-  const jobs = await getJobs(latitude, longitude);
-  return jobs;
-}
 
 export default function MapScreen() {
+  const fetchJobs = async () => {
+    const jobs = await getJobs(location.latitude, location.longitude);
+    setJobs(jobs);
+  };
   const dispatch = useAppDispatch();
   const { location } = useAppSelector((state) => state.location);
   const { mapCenterLocation } = useAppSelector((state) => state.map);
   const [jobs, setJobs] = useState<any>([]);
   useEffect(() => {
-    if (location.latitude == 0) {
+    if (location.latitude === 0 && location.longitude === 0) {
       dispatch(getUserLocation());
-      setJobs(getJobs(location.latitude, location.longitude));
-      console.log(jobs);
+    } else if (jobs.length === 0) {
+      fetchJobs().catch((e) => console.log(e));
     }
   }, [location, dispatch, jobs]);
 
@@ -86,17 +86,16 @@ export default function MapScreen() {
           latitudeDelta: 0.0015,
           longitudeDelta: 0.0121
         }}>
-        {/* {jobs &&
-          jobs.map((job: any, index: number) => (
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: job.location.latitude,
-                longitude: job.location.longitude
-              }}
-              image={profileIcon}
-            />
-          ))} */}
+        {jobs.map((job: any, index: number) => (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: job.location.coordinates[1],
+              longitude: job.location.coordinates[0]
+            }}
+            image={profilePicture}
+          />
+        ))}
       </MapView>
       <View style={styles.statusContainer}>
         <HealthStatus />
