@@ -13,9 +13,9 @@ import colors from '../../theme/colors';
 import { CARD } from '../../constants/dimensions';
 import { Icons } from '../../theme/Icons';
 import jobs, { jobCategories, popularJobs } from '../../constants/fakeData';
-import { profilePicture } from '../../theme/images';
 import { faker } from '@faker-js/faker';
-import { navigationType } from '../../types';
+import { JobFeedScreenNavigationProp } from '../../navigation/types/NavTypes';
+import { profilePicture } from '../../theme/images';
 
 const styles = StyleSheet.create({
   container: {
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function JobFeedScreen({ navigation }: navigationType) {
+export default function JobFeedScreen({ navigation }: JobFeedScreenNavigationProp) {
   const [selectedTab, setSelectedTab] = useState(jobCategories[0]);
   return (
     <SafeAreaView style={styles.container}>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useFormikContext } from 'formik';
-import { initialPhoneType } from '../../types';
 import colors from '../../theme/colors';
 
 const styles = StyleSheet.create({
@@ -20,7 +19,7 @@ const styles = StyleSheet.create({
 });
 
 const OTPButton = () => {
-  const { handleSubmit, isSubmitting } = useFormikContext<initialPhoneType>();
+  const { handleSubmit, isSubmitting } = useFormikContext<string>();
   const color = colors.confirm; //TODO: Find a fix.
   return (
     <TouchableOpacity
