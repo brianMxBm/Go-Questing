@@ -1,17 +1,17 @@
 import React, { useRef, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, Animated, Image, Dimensions, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { WIDTH } from '../../constants/dimensions';
-import colors from '../../theme/colors';
+import { TutorialScreenNavigationProp } from '../../navigation/types/NavTypes';
 import { DATA } from '../../constants/slides';
+import colors from '../../theme/colors';
 import Indicator from '../components/Indicator';
 import BackDrop from '../components/BackDrop';
 import Square from '../components/Square';
-import { navigationType } from '../../types';
 import NextButton from '../components/NextButton';
-const { width } = Dimensions.get('screen');
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const { width } = Dimensions.get('screen');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function OnBoardingScreen({ navigation }: navigationType) {
+function TutorialScreen({ navigation }: TutorialScreenNavigationProp) {
   const [currentPage, setCurrentPage] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef<any>(null); //TODO: Change Type
@@ -99,4 +99,4 @@ function OnBoardingScreen({ navigation }: navigationType) {
   );
 }
 
-export default OnBoardingScreen;
+export default TutorialScreen;

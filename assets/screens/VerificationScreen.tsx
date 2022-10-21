@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text } from 'react-native';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { checkVerification } from '../../api/verify';
-import { navigationType } from '../../types';
-import AnimatedAlert from '../components/AnimatedAlert';
 import { WIDTH } from '../../constants/dimensions';
 import { updateNotification } from '../../utils/helper';
-
-interface OtpProps {
-  navigation: navigationType;
-  route: any;
-}
+import { VerificationScreenNavigationProp } from '../../navigation/types/NavTypes';
+import AnimatedAlert from '../components/AnimatedAlert';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -41,7 +36,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function VerificationScreen({ navigation, route }: OtpProps) {
+function VerificationScreen({ navigation, route }: VerificationScreenNavigationProp) {
   const { phoneNumber } = route?.params || {};
   const [message, setMessage] = useState({
     //TODO: Implement utilzing Redux.

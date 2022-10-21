@@ -1,4 +1,4 @@
-import { Animated, Dimensions } from 'react-native';
+import { Animated } from 'react-native';
 import React from 'react';
 import { HEIGHT, WIDTH } from '../../constants/dimensions';
 import colors from '../../theme/colors';

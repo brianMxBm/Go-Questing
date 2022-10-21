@@ -11,9 +11,9 @@ import TutorialScreen from '../../assets/screens/TutorialScreen';
 import LoginScreen from '../../assets/screens/LoginScreen';
 import RegisterScreen from '../../assets/screens/RegisterScreen';
 import ProfileScreen from '../../assets/screens/ProfileScreen';
+import PostJobScreen from '../../assets/screens/PostJobScreen';
 import Tabs from '../Tabs';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import PostJobScreen from '../../assets/screens/PostJobScreen';
 
 /**
  * Define every single screen that takes in a prop here, it's easy to maintain all in a single locaiton.
@@ -76,6 +76,9 @@ export const ROOT_SCREENS = {
   },
   Verification: {
     component: VerificationScreen
+  },
+  Post: {
+    component: PostJobScreen
   }
 };
 
@@ -96,7 +99,7 @@ export const TAB_SCREENS = {
     component: MapScreen
   },
   Feed: {
-    component: PostJobScreen
+    component: JobFeedScreen
   },
   Details: {
     component: JobDetailScreen

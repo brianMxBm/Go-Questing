@@ -65,7 +65,7 @@ function PostJobScreen() {
           onSubmit={handlePostJob}>
           <FormInput name="title" placeholderText="Job Title" />
           {/* TODO: Create new form component for numbers.  */}
-          <FormInput name="compensation" placeholderText="Job Pay" />{' '}
+          <FormInput name="compensation" placeholderText="Job Pay" />
           <FormInput style={{ height: 50 }} name="description" placeholderText="Job Description" />
           {/* TODO: Create new form component for categories.  */}
           <FormInput name="category" placeholderText="Job Category" />
