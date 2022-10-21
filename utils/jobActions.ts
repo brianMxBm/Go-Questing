@@ -15,3 +15,13 @@ export const postJob = async (values: any) => {
     return catchError(error);
   }
 };
+export const getJobs = async (latitude: number, longitude: number) => {
+  try {
+    const { data } = await client.get('/jobs/getJobs', {
+      params: { latitude, longitude }
+    });
+    return data.jobs;
+  } catch (error: any) {
+    return catchError(error);
+  }
+};

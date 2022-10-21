@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React, { useEffect } from 'react';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import React, { useEffect, useState } from 'react';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { WIN_WIDTH, HEIGHT } from '../../constants/dimensions';
 import { getUserLocation } from '../../redux/actions/locationAction';
 import { useAppDispatch, useAppSelector } from '../../redux/Hooks';
@@ -9,6 +9,8 @@ import HealthStatus from '../components/HealthStatus';
 import CoinStatus from '../components/CoinStatus';
 import SwitchMap from '../components/SwitchMap';
 import CenterBox from '../components/CenterBox';
+import { getJobs } from '../../utils/jobActions';
+import { profilePicture } from '../../theme/images';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,14 +53,21 @@ const styles = StyleSheet.create({
 });
 
 export default function MapScreen() {
+  const fetchJobs = async () => {
+    const jobs = await getJobs(location.latitude, location.longitude);
+    setJobs(jobs);
+  };
   const dispatch = useAppDispatch();
   const { location } = useAppSelector((state) => state.location);
   const { mapCenterLocation } = useAppSelector((state) => state.map);
+  const [jobs, setJobs] = useState<any>([]);
   useEffect(() => {
-    if (location.latitude == 0) {
+    if (location.latitude === 0 && location.longitude === 0) {
       dispatch(getUserLocation());
+    } else if (jobs.length === 0) {
+      fetchJobs().catch((e) => console.log(e));
     }
-  }, [location, dispatch]);
+  }, [location, dispatch, jobs]);
 
   if (!location) {
     return <Text>Loading..</Text>;
@@ -77,8 +86,18 @@ export default function MapScreen() {
           longitude: mapCenterLocation.longitude ? mapCenterLocation.longitude : location.longitude,
           latitudeDelta: 0.0015,
           longitudeDelta: 0.0121
-        }}
-      />
+        }}>
+        {jobs.map((job: any, index: number) => (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: job.location.coordinates[1],
+              longitude: job.location.coordinates[0]
+            }}
+            image={profilePicture}
+          />
+        ))}
+      </MapView>
       <View style={styles.statusContainer}>
         <HealthStatus />
       </View>
