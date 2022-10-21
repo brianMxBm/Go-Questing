@@ -52,7 +52,7 @@ const validationSchema = yup.object().shape({
 
 function RegisterScreen({ navigation }: RegisterScreenNavigationProp) {
   const handleSignUp = async (
-    values: typeof initialValues,
+    values: Omit<typeof initialValues, 'confirmPassword'>, //I'm omitting the confirmPassword value since I'm not even passing it in.
     formikActions: FormikProps<FormikHandlers>
   ) => {
     const res = await signUp(values);
