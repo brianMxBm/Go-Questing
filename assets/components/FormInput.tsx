@@ -66,28 +66,16 @@ function FormInput({ placeholderText, name, style, secure }: formType) {
         ) : null}
       </>
       <View style={[styles.inputContainer, style]}>
-        {secure ? (
-          <TextInput
-            value={value}
-            secureTextEntry={true}
-            style={styles.input}
-            onChangeText={handleChange(name)}
-            numberOfLines={1}
-            onBlur={handleBlur(name)}
-            placeholder={placeholderText}
-            placeholderTextColor="#666"
-          />
-        ) : (
-          <TextInput
-            value={value}
-            style={styles.input}
-            onChangeText={handleChange(name)}
-            numberOfLines={1}
-            onBlur={handleBlur(name)}
-            placeholder={placeholderText}
-            placeholderTextColor="#666"
-          />
-        )}
+        <TextInput
+          value={value}
+          secureTextEntry={secure ? true : false}
+          style={styles.input}
+          onChangeText={handleChange(name)}
+          numberOfLines={1}
+          onBlur={handleBlur(name)}
+          placeholder={placeholderText}
+          placeholderTextColor="#666"
+        />
       </View>
     </View>
   );
