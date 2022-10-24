@@ -1,7 +1,7 @@
 module.exports = function (api) {
-  api.cache(true);
+  api.cache(false);
   return {
-    presets: ['babel-preset-expo'],
+    presets: ['babel-preset-expo', 'module:metro-react-native-babel-preset'],
     plugins: [
       [
         'module:react-native-dotenv',
@@ -9,7 +9,18 @@ module.exports = function (api) {
           moduleName: '@env',
           path: '.env'
         }
-      ]
+      ],
+      [
+        'module-resolver',
+        {
+          root: ['./src'],
+          extensions: ['.ios.js', '.android.js', '.js', '.ts', '.tsx', '.json'],
+          alias: {
+            src: './src'
+          }
+        }
+      ],
+      'react-native-reanimated/plugin'
     ]
   };
 };

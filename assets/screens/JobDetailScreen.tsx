@@ -25,11 +25,12 @@ const styles = StyleSheet.create({
 });
 
 export default function JobDetailScreen({ navigation, route }: JobDetailScreenNavigationProp) {
-  const { item } = route.params;
+  //TODO: Change from any in production
+  const { color, image, type } = route.params.item;
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View
-        style={[StyleSheet.absoluteFillObject, { backgroundColor: item.color, borderRadius: 16 }]}>
+      <View style={[StyleSheet.absoluteFillObject, { backgroundColor: color, borderRadius: 16 }]}>
         <Icons.AntDesign
           name="close"
           size={28}
@@ -45,9 +46,9 @@ export default function JobDetailScreen({ navigation, route }: JobDetailScreenNa
           }}
         />
         <View style={{ alignItems: 'center', top: 50 }}>
-          <Text style={styles.type}>{item.type}</Text>
+          <Text style={styles.type}>{type}</Text>
         </View>
-        <Image source={{ uri: item.image }} style={styles.image} />
+        <Image source={{ uri: image }} style={styles.image} />
       </View>
     </SafeAreaView>
   );

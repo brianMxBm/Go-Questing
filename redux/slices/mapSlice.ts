@@ -20,7 +20,6 @@ const mapSlice = createSlice({
   reducers: {
     //Change the Region of the map.
     map_center_change: (state, action: PayloadAction<mapState['mapCenterLocation']>) => {
-      console.log(action.payload);
       return {
         ...state,
         mapCenterLocation: action.payload

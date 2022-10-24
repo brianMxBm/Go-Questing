@@ -19,7 +19,7 @@ export const WINDOW = {
 
 export const TABS = {
   WIDTH,
-  HEIGHT: 75
+  HEIGHT: '7%'
 };
 
 export const SCREEN = {

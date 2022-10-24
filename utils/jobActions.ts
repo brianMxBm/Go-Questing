@@ -9,8 +9,18 @@ const catchError = (error: { response: any; message: any; data: any }) => {
 
 export const postJob = async (values: any) => {
   try {
-    const { data } = await client.post('/jobs/postJob', { ...values });
+    const { data } = await client.post('/jobs/postJob', values);
     return data;
+  } catch (error: any) {
+    return catchError(error);
+  }
+};
+export const getJobs = async (latitude: number, longitude: number) => {
+  try {
+    const { data } = await client.get('/jobs/getJobs', {
+      params: { latitude, longitude }
+    });
+    return data.jobs;
   } catch (error: any) {
     return catchError(error);
   }
