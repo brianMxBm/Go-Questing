@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
 });
 
 export default function JobDetailScreen({ navigation, route }: JobDetailScreenNavigationProp) {
-  //TODO: Change from any in production
   const { color, image, type } = route.params.item;
 
   return (

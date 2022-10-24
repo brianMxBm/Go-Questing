@@ -44,11 +44,11 @@ const HomeStackNavigator = () => {
         screenOptions={{
           headerShown: false
         }}>
+        <HomeStack.Screen name="Tabs" component={Tabs} />
         <HomeStack.Screen name="Register" component={RegisterScreen} />
         <HomeStack.Screen name="Login" component={LoginScreen} />
         <HomeStack.Screen name="Forgot" component={ForgotPasswordOTPScreen} />
         <HomeStack.Screen name="Verification" component={VerificationScreen} />
-        <HomeStack.Screen name="Tabs" component={Tabs} />
         <HomeStack.Screen name="Home" component={HomeScreen} />
         <HomeStack.Screen name="Profile" component={ProfileScreen} />
         <HomeStack.Screen name="Details" component={JobDetailScreen} />
@@ -60,11 +60,11 @@ const HomeStackNavigator = () => {
         screenOptions={{
           headerShown: false
         }}>
+        <HomeStack.Screen name="Tabs" component={Tabs} />
         <HomeStack.Screen name="Register" component={RegisterScreen} />
         <HomeStack.Screen name="Login" component={LoginScreen} />
         <HomeStack.Screen name="Forgot" component={ForgotPasswordOTPScreen} />
         <HomeStack.Screen name="Verification" component={VerificationScreen} />
-        <HomeStack.Screen name="Tabs" component={Tabs} />
         <HomeStack.Screen name="Home" component={HomeScreen} />
         <HomeStack.Screen name="Profile" component={ProfileScreen} />
         <HomeStack.Screen name="Details" component={JobDetailScreen} />
