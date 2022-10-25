@@ -1,16 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
   Image,
   GestureResponderEvent,
-  ImageSourcePropType
+  ImageSourcePropType,
+  AccessibilityState
 } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Screens } from '../constants/screens';
 import { TABS } from '../constants/dimensions';
 import { mapIcon, profileIcon, messageIcon, swordIcon, compassIcon } from '../theme/images';
-import { BottomStackParamList } from './types/NavTypes';
+import { BottomStackParamList, ITabItem } from './types/NavTypes';
 import * as Animatable from 'react-native-animatable';
 import colors from '../theme/colors';
 
@@ -19,7 +20,7 @@ interface tabButtonType {
     icon: ImageSourcePropType;
   };
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
-  accessibilityState?: any; //TODO: CHANGE THIS CAN'T STAY LIKE THIS
+  accessibilityState?: AccessibilityState;
 }
 
 const styles = StyleSheet.create({
@@ -35,57 +36,53 @@ const styles = StyleSheet.create({
   }
 });
 
-export const TabArray = [
+export const tabArray: ITabItem[] = [
   {
-    route: 'Map',
+    name: 'Map',
     icon: mapIcon,
     component: Screens.MapScreen
   },
   {
-    route: 'Feed',
+    name: 'Feed',
     icon: compassIcon,
     component: Screens.JobFeedScreen
   },
   {
-    route: 'Quest',
+    name: 'Quest',
     icon: swordIcon,
     component: Screens.QuestScreen
   },
   {
-    route: 'Profile',
+    name: 'Profile',
     icon: profileIcon,
     component: Screens.ProfileScreen
   },
   {
-    route: 'Message',
+    name: 'Message',
     icon: messageIcon,
     component: Screens.MessageScreen
   }
-] as const;
+];
 
 function TabButton(tab: tabButtonType) {
-  const focused = tab.accessibilityState.selected;
-  const viewRef = useRef<any>(null); //TODO: Figure out specific type.
+  const focused = tab.accessibilityState && tab.accessibilityState.selected;
 
-  useEffect(() => {
-    if (viewRef.current) {
-      if (focused) {
-        viewRef.current.animate({
-          0: { scale: 0.5, rotate: '0deg' },
-          1: { scale: 1.22, rotate: '360deg' }
-        });
-      } else {
-        viewRef.current.animate({
-          0: { scale: 1.22, rotate: '360deg' },
-          1: { scale: 1, rotate: '0deg' }
-        });
-      }
-    }
-  }, [focused]);
+  const focusedTabAnimation = {
+    0: { transform: [{ rotate: '0deg' }], scale: 0.5 },
+    1: { transform: [{ rotate: '360deg' }], scale: 1.22 }
+  };
+
+  const unfocusedTabAnimation = {
+    0: { transform: [{ rotate: '360deg' }], scale: 1.22 },
+    1: { transform: [{ rotate: '0deg' }], scale: 1 }
+  };
 
   return (
     <TouchableOpacity onPress={tab.onPress} activeOpacity={1} style={styles.container}>
-      <Animatable.View ref={viewRef} duration={500} style={styles.container}>
+      <Animatable.View
+        animation={focused ? focusedTabAnimation : unfocusedTabAnimation}
+        duration={500}
+        style={styles.container}>
         <Image style={styles.icon} source={tab.item.icon}></Image>
       </Animatable.View>
     </TouchableOpacity>
@@ -112,10 +109,10 @@ export default function Tabs() {
           overflow: 'hidden'
         }
       }}>
-      {TabArray.map((item, index) => (
+      {tabArray.map((item, index) => (
         <Tab.Screen
           key={index}
-          name={item.route}
+          name={item.name}
           component={item.component}
           options={{
             tabBarShowLabel: false,

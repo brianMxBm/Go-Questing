@@ -1,5 +1,5 @@
+import { ImageSourcePropType } from 'react-native';
 import HomeScreen from '../../assets/screens/HomeScreen';
-import FeedScreen from '../../assets/screens/PostJobScreen';
 import JobDetailScreen from '../../assets/screens/JobDetailScreen';
 import JobFeedScreen from '../../assets/screens/JobFeedScreen';
 import ForgotPasswordOTPScreen from '../../assets/screens/ForgotPasswordScreen';
@@ -131,7 +131,11 @@ export type LoginScreenNavigationProp = NativeStackScreenProps<HomeStackParamLis
 
 export type JobDetailScreenNavigationProp = NativeStackScreenProps<HomeStackParamList, 'Details'>;
 
-export type JobFeedScreenNavigationProp = NativeStackScreenProps<HomeStackParamList, 'Feed'>;
+type JobFeedScreenProps = NativeStackScreenProps<HomeStackParamList, 'Feed'>;
+
+export interface JobFeedScreenNavigationProp {
+  navigation: JobFeedScreenProps['navigation'];
+}
 
 export type ForgotPassowrdScreenNavigationProp = NativeStackScreenProps<
   HomeStackParamList,
@@ -142,3 +146,10 @@ export type VerificationScreenNavigationProp = NativeStackScreenProps<
   HomeStackParamList,
   'Verification'
 >;
+
+// Tab Screen Interface
+export interface ITabItem {
+  name: keyof BottomStackParamList;
+  icon: ImageSourcePropType;
+  component: (() => JSX.Element) | (({ navigation }: JobFeedScreenNavigationProp) => JSX.Element);
+}
