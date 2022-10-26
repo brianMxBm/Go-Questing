@@ -1,12 +1,27 @@
-import React, { useEffect, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React from 'react';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  GestureResponderEvent,
+  ImageSourcePropType,
+  AccessibilityState
+} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Screens } from '../constants/screens';
 import { TABS } from '../constants/dimensions';
-import { tabButtonType } from '../types/index';
 import { mapIcon, profileIcon, messageIcon, swordIcon, compassIcon } from '../theme/images';
+import { BottomStackParamList, ITabItem } from './types/NavTypes';
 import * as Animatable from 'react-native-animatable';
 import colors from '../theme/colors';
+
+interface tabButtonType {
+  item: {
+    icon: ImageSourcePropType;
+  };
+  onPress?: ((event: GestureResponderEvent) => void) | undefined;
+  accessibilityState?: AccessibilityState;
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -14,81 +29,68 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  label: {
-    fontSize: 12,
-    color: 'white'
-  },
+
   icon: {
     width: 40,
     height: 40
   }
 });
 
-const Tab = createBottomTabNavigator();
-
-export const TabArray = [
+export const tabArray: ITabItem[] = [
   {
-    route: 'Home',
-    label: 'Home',
+    name: 'Map',
     icon: mapIcon,
     component: Screens.MapScreen
   },
   {
-    route: 'Feed',
-    label: 'Feed',
+    name: 'Feed',
     icon: compassIcon,
     component: Screens.JobFeedScreen
   },
   {
-    route: 'Quests',
-    label: 'Quests',
+    name: 'Quest',
     icon: swordIcon,
     component: Screens.QuestScreen
   },
   {
-    route: 'Profile',
-    label: 'Profile',
+    name: 'Profile',
     icon: profileIcon,
     component: Screens.ProfileScreen
   },
   {
-    route: 'Message',
-    label: 'Message',
+    name: 'Message',
     icon: messageIcon,
     component: Screens.MessageScreen
   }
 ];
 
 function TabButton(tab: tabButtonType) {
-  const focused = tab.accessibilityState.selected;
-  const viewRef = useRef<any>(null); //TODO: Figure out specific type.
+  const focused = tab.accessibilityState && tab.accessibilityState.selected;
 
-  useEffect(() => {
-    if (viewRef.current) {
-      if (focused) {
-        viewRef.current.animate({
-          0: { scale: 0.5, rotate: '0deg' },
-          1: { scale: 1.35, rotate: '0deg' }
-        });
-      } else {
-        viewRef.current.animate({
-          0: { scale: 1.2, rotate: '0deg' },
-          1: { scale: 1, rotate: '0deg' }
-        });
-      }
-    }
-  }, [focused]);
+  const focusedTabAnimation = {
+    0: { transform: [{ rotate: '0deg' }], scale: 0.5 },
+    1: { transform: [{ rotate: '360deg' }], scale: 1.22 }
+  };
+
+  const unfocusedTabAnimation = {
+    0: { transform: [{ rotate: '360deg' }], scale: 1.22 },
+    1: { transform: [{ rotate: '0deg' }], scale: 1 }
+  };
 
   return (
     <TouchableOpacity onPress={tab.onPress} activeOpacity={1} style={styles.container}>
-      <Animatable.View ref={viewRef} duration={500} style={styles.container}>
+      <Animatable.View
+        animation={focused ? focusedTabAnimation : unfocusedTabAnimation}
+        duration={500}
+        style={styles.container}>
         <Image style={styles.icon} source={tab.item.icon}></Image>
       </Animatable.View>
     </TouchableOpacity>
   );
 }
+const Tab = createBottomTabNavigator<BottomStackParamList>();
 
-export default function TabNav() {
+export default function Tabs() {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -97,19 +99,20 @@ export default function TabNav() {
           height: TABS.HEIGHT,
           borderTopWidth: 0,
           backgroundColor: colors.black,
-          paddingTop: 7,
+          paddingTop: 15,
           paddingHorizontal: 15,
-          borderRadius: 30,
-          borderLeftWidth: 0.2,
-          borderRightWidth: 0.2,
+          borderRadius: 25,
+          borderColor: colors.white,
+          borderLeftWidth: 0,
+          borderRightWidth: 0,
           position: 'absolute',
           overflow: 'hidden'
         }
       }}>
-      {TabArray.map((item, index) => (
+      {tabArray.map((item, index) => (
         <Tab.Screen
           key={index}
-          name={item.route}
+          name={item.name}
           component={item.component}
           options={{
             tabBarShowLabel: false,

@@ -1,17 +1,17 @@
 import { TWILIO_BASE_URL } from '@env';
 
 const catchError = (error: { response: any; message: any; data: any }) => {
+  //TODO: Error can't stay as any. Refactor.
   if (error?.response?.data) {
     return error.response.data;
   }
   return { success: false, error: error.message };
 };
 
-export const sendVerification = async (values: any) => {
-  //TODO: Change Type. I think It's a String?
+export const sendVerification = async (request: string) => {
   try {
     const phoneNumber = JSON.stringify({
-      to: values,
+      to: request,
       channel: 'sms'
     });
 
@@ -30,6 +30,7 @@ export const sendVerification = async (values: any) => {
 };
 
 export const checkVerification = async (values: any, code: any) => {
+  //TODO: Change To Actual Req Type.
   try {
     const pin = JSON.stringify({
       to: values,

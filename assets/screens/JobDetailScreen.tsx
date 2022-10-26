@@ -1,8 +1,10 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
 import React from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Icons } from '../../theme/Icons';
 import { CARD, SPACING, CARD_HEIGHT } from '../../constants/dimensions';
+import { JobDetailScreenNavigationProp } from '../../navigation/types/NavTypes';
+
 const styles = StyleSheet.create({
   type: {
     fontWeight: '800',
@@ -22,9 +24,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function JobDetailScreen({ navigation, route }: any) {
-  //TODO: Change from any in production
-  const { color, image, type } = route.params;
+export default function JobDetailScreen({ navigation, route }: JobDetailScreenNavigationProp) {
+  const { color, image, type } = route.params.item;
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={[StyleSheet.absoluteFillObject, { backgroundColor: color, borderRadius: 16 }]}>

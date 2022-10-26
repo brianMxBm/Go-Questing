@@ -1,21 +1,28 @@
 import React, { useRef, useState } from 'react';
-import { FlatList, Image, Pressable, StyleSheet, View, Text } from 'react-native';
+import {
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  View,
+  Text,
+  ViewStyle,
+  GestureResponderEvent
+} from 'react-native';
 import { Surface } from 'react-native-paper';
 import { WIDTH } from '../../constants/dimensions';
 import colors from '../../theme/colors';
 import { Icons } from '../../theme/Icons';
-import { profileIcon } from '../../theme/images';
-import ProfileCircle from './ProfileCircle';
 
 const HEIGHT = 250;
 
 interface CardType {
   images: string[];
   title: string;
-  onPress?: () => any;
+  onPress?: ((event: GestureResponderEvent) => void) | undefined;
   tagline: string;
   price: number;
-  style?: any;
+  style?: ViewStyle;
 }
 
 const styles = StyleSheet.create({
@@ -70,7 +77,7 @@ const styles = StyleSheet.create({
     borderRadius: 30
   }
 });
-export default function Card({ images, price, tagline, title, onPress, style }: CardType) {
+export default function Card({ images, price, title, onPress }: CardType) {
   const viewConfigRef = { viewAreaCoveragePercentThreshold: 95 };
   const flatListRef = useRef<FlatList | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);

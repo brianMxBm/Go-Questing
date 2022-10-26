@@ -1,17 +1,23 @@
-import { View, Text, StyleSheet, Animated } from 'react-native';
+import { Text, StyleSheet, Animated, ViewStyle } from 'react-native';
 import React, { useEffect, useRef } from 'react';
-import { notificationType } from '../../types';
-import { WIDTH } from '../../constants/dimensions';
 import colors from '../../theme/colors';
+
+export interface notificationType {
+  type: string;
+  text: string;
+  style?: ViewStyle;
+}
 
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 5
   },
   text: {
     color: colors.white,
-    fontSize: 15
+    fontSize: 15,
+    fontWeight: '900'
   }
 });
 

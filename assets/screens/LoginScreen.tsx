@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { LoginScreenNavigationProp } from '../../navigation/types/NavTypes';
+import { FormikHandlers, FormikProps } from 'formik';
+import { signIn } from '../../utils/auth';
+import { updateNotification } from '../../utils/helper';
 import FormInput from '../components/FormInput';
 import SubmitButton from '../components/SubmitButton';
 import * as yup from 'yup';
 import CustomFormik from '../components/CustomFomik';
 import colors from '../../theme/colors';
-import { signIn } from '../../utils/auth';
-import { navigationType } from '../../types';
 import AnimatedAlert from '../components/AnimatedAlert';
-import { updateNotification } from '../../utils/helper';
 import LinkNavigator from '../components/LinkNavigator';
 
 const styles = StyleSheet.create({
@@ -16,10 +17,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: colors.white
   },
   textDanger: {
-    color: 'red'
+    color: colors.errors
   }
 });
 
@@ -33,8 +34,11 @@ const validationSchema = yup.object().shape({
   password: yup.string().trim().required('Password Is Required')
 });
 
-function LoginScreen({ navigation }: navigationType) {
-  const handleSignIn = async (values: any, formikActions: any) => {
+function LoginScreen({ navigation }: LoginScreenNavigationProp) {
+  const handleSignIn = async (
+    values: typeof initialValues,
+    formikActions: FormikProps<FormikHandlers>
+  ) => {
     const res = await signIn(values);
     formikActions.setSubmitting(false);
     if (!res.success) return updateNotification(setMessage, res.error);
@@ -56,14 +60,13 @@ function LoginScreen({ navigation }: navigationType) {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={{ bottom: 50 }}>
         {message.text ? <AnimatedAlert type={message.type} text={message.text} /> : null}
-
         <Text style={{ color: 'white' }}>Login</Text>
         <CustomFormik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleSignIn}>
           <FormInput name="email" placeholderText="Email" />
-          <FormInput name="password" placeholderText="Password" />
+          <FormInput secure={true} name="password" placeholderText="Password" />
           <SubmitButton color={colors.buttons} title="Login" />
         </CustomFormik>
         <LinkNavigator

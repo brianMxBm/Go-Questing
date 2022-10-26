@@ -10,7 +10,6 @@ interface ProfileCircleType {
   width?: number;
   height: number;
   shape: string;
-  userContainerStyle?: any;
   pictureStyle?: ImageStyle;
 }
 

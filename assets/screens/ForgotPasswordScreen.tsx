@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import PhoneInput, { isValidNumber } from 'react-native-phone-number-input';
 import { sendVerification } from '../../api/verify';
-import { navigationType } from '../../types';
 import { updateNotification } from '../../utils/helper';
+import { WIDTH } from '../../constants/dimensions';
+import { ForgotPassowrdScreenNavigationProp } from '../../navigation/types/NavTypes';
 import AnimatedAlert from '../components/AnimatedAlert';
 import colors from '../../theme/colors';
-import { WIDTH } from '../../constants/dimensions';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function ForgotPasswordOTPScreen({ navigation }: navigationType) {
+function ForgotPasswordOTPScreen({ navigation }: ForgotPassowrdScreenNavigationProp) {
   const [value, setValue] = useState('');
   const [formattedValue, setFormattedValue] = useState('');
   const [message, setMessage] = useState({
@@ -42,19 +42,17 @@ function ForgotPasswordOTPScreen({ navigation }: navigationType) {
     type: ''
   });
 
-  const handleOTP = async (formattedValue: any) => {
+  const handleOTP = async (formattedValue: string) => {
     try {
       if (!isValidNumber(formattedValue, 'US'))
         return updateNotification(setMessage, 'Invalid Number');
       const res = await sendVerification(formattedValue);
       if (!res) return console.log('error');
-
       navigation.navigate('Verification', { phoneNumber: formattedValue });
     } catch (error) {
       console.log(error); //TODO: Implement proper exception handling.
     }
   };
-  //TODO: Integrate with custom formik component.
   return (
     <View style={styles.container}>
       {message.text ? (

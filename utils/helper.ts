@@ -1,5 +1,5 @@
 export const updateNotification = (
-  updater: (updateType: { text: any; type: string }) => void,
+  updater: (updateType: { text: string; type: string }) => void,
   text: string,
   type = 'error'
 ) => {
