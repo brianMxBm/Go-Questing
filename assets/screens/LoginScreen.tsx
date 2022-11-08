@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { LoginScreenNavigationProp } from '../../navigation/types/NavTypes';
 import { FormikHandlers, FormikProps } from 'formik';
-import { signIn } from '../../utils/auth';
-import { updateNotification } from '../../utils/helper';
+// import { updateNotification } from '../../utils/helper';
 import FormInput from '../components/FormInput';
 import SubmitButton from '../components/SubmitButton';
 import * as yup from 'yup';
@@ -11,6 +10,8 @@ import CustomFormik from '../components/CustomFomik';
 import colors from '../../theme/colors';
 import AnimatedAlert from '../components/AnimatedAlert';
 import LinkNavigator from '../components/LinkNavigator';
+import { useAppDispatch } from '../../app/hooks';
+import { login } from '../../features/auth/authSlice';
 
 const styles = StyleSheet.create({
   container: {
@@ -35,13 +36,15 @@ const validationSchema = yup.object().shape({
 });
 
 function LoginScreen({ navigation }: LoginScreenNavigationProp) {
+  const dispatch = useAppDispatch();
+
   const handleSignIn = async (
     values: typeof initialValues,
     formikActions: FormikProps<FormikHandlers>
   ) => {
-    const res = await signIn(values);
+    dispatch(login(values));
     formikActions.setSubmitting(false);
-    if (!res.success) return updateNotification(setMessage, res.error);
+    // if (!res.success) return updateNotification(setMessage, res.error);
     formikActions.resetForm();
     navigation.reset({
       index: 0,
@@ -49,7 +52,7 @@ function LoginScreen({ navigation }: LoginScreenNavigationProp) {
     });
   };
 
-  const [message, setMessage] = useState({
+  const [message] = useState({
     //TODO:Implement utilzing Redux.
     text: '',
     type: ''

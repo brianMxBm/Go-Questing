@@ -1,15 +1,15 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import React, { useEffect } from 'react';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { WIN_WIDTH, HEIGHT } from '../../constants/dimensions';
-import { getUserLocation } from '../../redux/actions/locationAction';
-import { useAppDispatch, useAppSelector } from '../../redux/Hooks';
+import { getUserLocation } from '../../features/location/locationService';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import mapStyle from '../../theme/mapStyle';
 import HealthStatus from '../components/HealthStatus';
 import CoinStatus from '../components/CoinStatus';
 import SwitchMap from '../components/SwitchMap';
 import CenterBox from '../components/CenterBox';
-import { getJobs } from '../../utils/jobActions';
+import { getJobs } from '../../features/jobs/jobsSlice';
 import { profilePicture } from '../../theme/images';
 
 const styles = StyleSheet.create({
@@ -53,24 +53,31 @@ const styles = StyleSheet.create({
 });
 
 export default function MapScreen() {
-  const fetchJobs = async () => {
-    const jobs = await getJobs(location.latitude, location.longitude);
-    setJobs(jobs);
-  };
   const dispatch = useAppDispatch();
+
   const { location } = useAppSelector((state) => state.location);
   const { mapCenterLocation } = useAppSelector((state) => state.map);
-  const [jobs, setJobs] = useState<any>([]);
+  const { jobs, isLoading } = useAppSelector((state) => state.jobs);
+
+  const fetchJobs = async (latitude: number, longitude: number) => {
+    dispatch(getJobs({ latitude, longitude }));
+  };
+
   useEffect(() => {
     if (location.latitude === 0 && location.longitude === 0) {
       dispatch(getUserLocation());
-    } else if (jobs.length === 0) {
-      fetchJobs().catch((e) => console.log(e));
+    } else {
+      const { latitude, longitude } = location;
+      fetchJobs(latitude, longitude);
     }
-  }, [location, dispatch, jobs]);
+  }, [location]);
 
-  if (!location) {
-    return <Text>Loading..</Text>;
+  if (!location || isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator size="large" color="#00ff00" />
+      </View>
+    );
   }
 
   return (
@@ -87,7 +94,7 @@ export default function MapScreen() {
           latitudeDelta: 0.0015,
           longitudeDelta: 0.0121
         }}>
-        {jobs.map((job: any, index: number) => (
+        {jobs.map((job, index: number) => (
           <Marker
             key={index}
             coordinate={{

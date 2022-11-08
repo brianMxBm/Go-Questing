@@ -1,11 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Store } from './redux/Store';
+import { store } from './app/store';
 import RootNavigator from './navigation/RootNavigation';
 
 function App() {
   return (
-    <Provider store={Store}>
+    <Provider store={store}>
       <RootNavigator />
     </Provider>
   );
