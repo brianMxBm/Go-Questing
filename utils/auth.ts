@@ -1,13 +1,15 @@
 import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
+
 import client from '../api/client';
 
-type registerReq = {
+export type registerReq = {
   name: string;
   email: string;
   password: string;
 };
 
-type loginReq = {
+export type loginReq = {
   email: string;
   password: string;
 };
@@ -46,6 +48,10 @@ export const signIn = async (request: loginReq) => {
       { ...request },
       { timeout: 10000, timeoutErrorMessage: 'Time Out. Please Try Again' }
     ); //TODO: Temp timeout time, stress test later to get accurate number.
+
+    // TODO: Encrypt token
+    await SecureStore.setItemAsync('user', JSON.stringify(data));
+
     return data;
   } catch (error: any) {
     if (axios.isAxiosError(error)) {

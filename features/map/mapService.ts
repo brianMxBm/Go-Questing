@@ -1,5 +1,5 @@
 import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
-import { map_center_change } from '../slices/mapSlice';
+import { map_center_change } from './mapSlice';
 
 export const setMapCenterLocation =
   (latitude: number, longitude: number) => (dispatch: ThunkDispatch<void, unknown, AnyAction>) => {

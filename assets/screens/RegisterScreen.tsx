@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { signUp } from '../../utils/auth';
-import { updateNotification } from '../../utils/helper';
+// import { updateNotification } from '../../utils/helper';
 import { RegisterScreenNavigationProp } from '../../navigation/types/NavTypes';
 import { FormikHandlers, FormikProps } from 'formik';
 import * as yup from 'yup';
@@ -11,6 +10,8 @@ import CustomFormik from '../components/CustomFomik';
 import colors from '../../theme/colors';
 import AnimatedAlert from '../components/AnimatedAlert';
 import LinkNavigator from '../components/LinkNavigator';
+import { register } from '../../features/auth/authSlice';
+import { useAppDispatch } from '../../app/hooks';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,13 +52,15 @@ const validationSchema = yup.object().shape({
 });
 
 function RegisterScreen({ navigation }: RegisterScreenNavigationProp) {
+  const dispatch = useAppDispatch();
+
   const handleSignUp = async (
     values: Omit<typeof initialValues, 'confirmPassword'>, //I'm omitting the confirmPassword value since I'm not even passing it in.
     formikActions: FormikProps<FormikHandlers>
   ) => {
-    const res = await signUp(values);
+    dispatch(register(values));
     formikActions.setSubmitting(false);
-    if (!res.success) return updateNotification(setMessage, res.error);
+    // if (!res.success) return updateNotification(setMessage, res.error);
     formikActions.resetForm();
     navigation.reset({
       index: 0,
@@ -65,7 +68,7 @@ function RegisterScreen({ navigation }: RegisterScreenNavigationProp) {
     });
   };
 
-  const [message, setMessage] = useState({
+  const [message] = useState({
     //Implement utilzing Redux.
     text: '',
     type: ''

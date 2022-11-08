@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import Icon, { Icons } from '../../theme/Icons';
-import { setMapCenterLocation } from '../../redux/actions/mapAction';
-import { useAppDispatch, useAppSelector } from '../../redux/Hooks';
+import { setMapCenterLocation } from '../../features/map/mapService';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import colors from '../../theme/colors';
 
 const styles = StyleSheet.create({
